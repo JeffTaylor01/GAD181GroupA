@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,11 @@ public class PlayerController : MonoBehaviour
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
         Debug.Log(this.transform.forward);
+    }
+
+    internal static void move(Vector3 vector3)
+    {
+        throw new NotImplementedException();
     }
 
     void FixedUpdate()
