@@ -538,6 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3971342cd620624ab89951c41b0436f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundedPlayer: 0
 --- !u!136 &810612751
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -625,13 +626,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810612749}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0d52aa2ccca1334d85ca1ef24d1e154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   jumpHeight: 6
   isGrounded: 0
+  jumpForce: 5
 --- !u!114 &810612756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +641,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810612749}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f793327acdbb1e4286ad36c5632bd14, type: 3}
   m_Name: 

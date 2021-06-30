@@ -7,7 +7,7 @@ public class charMove : MonoBehaviour
     
     private CharacterController controller;
     private Vector3 playerVelocity;
-    private bool groundedPlayer;
+    public bool groundedPlayer;
     private float playerSpeed = 6.0f;
     private float jumpHeight = 6.0f;
     private float gravityValue = -9.81f;
@@ -39,9 +39,10 @@ public class charMove : MonoBehaviour
             gameObject.transform.forward = move;
 
         }
-        if (Input.GetButtonDown("Jump") && groundedPlayer)
+        if (Input.GetKeyDown(KeyCode.Space) && groundedPlayer)
         {
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            playerVelocity.y = 10 ;
+            Debug.Log("Jump");
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;

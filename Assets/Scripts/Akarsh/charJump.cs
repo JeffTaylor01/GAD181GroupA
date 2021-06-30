@@ -6,28 +6,30 @@ public class charJump : MonoBehaviour
 {
     public float jumpHeight = 6f;
     public bool isGrounded;
+    public float jumpForce = 5.0f;
 
-    private new Rigidbody rigidbody; 
+    private  Rigidbody playerRb; 
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         if (isGrounded)
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                rigidbody.AddForce(Vector3.up * jumpHeight);
+                playerRb.AddForce(Vector3.up * jumpForce,ForceMode.Impulse);
             }
         }
     }
 
+
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("ground"))
         {
             isGrounded = true;
         }
@@ -35,7 +37,7 @@ public class charJump : MonoBehaviour
 
     void OnCollisionExit(Collision other)
     {
-        if (other.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "ground")
         {
             isGrounded = false;
         }
