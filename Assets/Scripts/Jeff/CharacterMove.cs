@@ -14,14 +14,11 @@ public class CharacterMove : MonoBehaviour
 
     private Vector3 move;
 
-    // Start is called before the first frame update
     void Start()
     {
         controller = gameObject.AddComponent<CharacterController>();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         groundedPlayer = controller.isGrounded;
