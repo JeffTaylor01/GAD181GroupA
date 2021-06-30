@@ -18,7 +18,7 @@ public class Dash : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             currentDashTime = 0.0f;
         }
