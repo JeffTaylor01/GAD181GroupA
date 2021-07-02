@@ -1,0 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class mainMenu : MonoBehaviour
+{
+    public static bool GameIsPaused = false;
+    public GameObject PausemenuUI;
+    public void StartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit(); 
+    }
+
+     void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if(GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+            void Resume()
+            {
+                PausemenuUI.SetActive(false);
+                Time.timeScale = 1f;
+                GameIsPaused = false;
+            }
+            void Pause()
+            {
+                PausemenuUI.SetActive(true);
+                Time.timeScale = 0f; // freezes time in pause
+                GameIsPaused = true;
+            }
+        }
+    }
+
+}
