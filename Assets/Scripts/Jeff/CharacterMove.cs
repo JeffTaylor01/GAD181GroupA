@@ -17,6 +17,7 @@ public class CharacterMove : MonoBehaviour
     void Start()
     {
         controller = gameObject.AddComponent<CharacterController>();
+
     }
 
     void Update()

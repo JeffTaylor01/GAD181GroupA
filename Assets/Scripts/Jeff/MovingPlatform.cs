@@ -9,11 +9,13 @@ public class MovingPlatform : MonoBehaviour
     public int target;
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, waypoints[target].position, moveSpeed * Time.deltaTime);
+        
     }
 
     private void FixedUpdate()
     {
+        transform.position = Vector3.MoveTowards(transform.position, waypoints[target].position, moveSpeed * Time.deltaTime);
+
         if (transform.position == waypoints[target].position)
         {
             if (target == waypoints.Count - 1)
