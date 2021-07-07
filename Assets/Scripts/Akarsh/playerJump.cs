@@ -18,7 +18,7 @@ public class playerJump : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump"))// if(Input.GetKeyDown(KeyCode.Space));
             {
                 rb.AddForce(Vector3.up * jumpHeight);
             }
