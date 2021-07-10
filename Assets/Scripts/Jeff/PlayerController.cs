@@ -14,15 +14,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float timeShieldIsActive = 5;
     [SerializeField] float boostingSpeed = 10;
     [SerializeField] GameObject shield;
+    [SerializeField] float dashTime = 0.5f;
+    [SerializeField] float dashSpeed = 20;
 
     bool jumpPressed;
     float horizontalInput;
     float verticalInput;
     float speedBoost;
+    float dash;
+    float dashingTimer = 0;
     float boostTimer = 0;
     bool isBoosting = false;
     bool shieldEnabled = false;
     float shieldTimer = 0;
+    bool isDashing = false;
     Rigidbody rb;
     GameObject destroyShield;
 
@@ -40,6 +45,13 @@ public class PlayerController : MonoBehaviour
             jumpPressed = true;
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            dash = dashSpeed;
+            isDashing = true;
+
+        }
+
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
@@ -47,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector3(horizontalInput * (movementSpeed + speedBoost), rb.velocity.y, verticalInput * (movementSpeed + speedBoost));
+        rb.velocity = new Vector3(horizontalInput * (movementSpeed + speedBoost + dash), rb.velocity.y, verticalInput * (movementSpeed + speedBoost + dash));
 
         if (isBoosting)
         {
@@ -57,6 +69,17 @@ public class PlayerController : MonoBehaviour
                 speedBoost = 0;
                 boostTimer = 0;
                 isBoosting = false;
+            }
+        }
+
+        if (isDashing)
+        {
+            dashingTimer += Time.deltaTime;
+            if (dashingTimer >= dashTime)
+            {
+                dash = 0;
+                dashingTimer = 0;
+                isDashing = false;
             }
         }
 
