@@ -1,46 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AI_Nav_Wander : MonoBehaviour
 {
-    public float wanderRadius;
-    public float wanderTimer;
 
-    private Transform target;
-    private UnityEngine.AI.NavMeshAgent agent;
-    private float timer;
+    public float xMax = 10;
+    public float xMin = 10;
+    public float zMax = 10;
+    public float zMin = 10;
 
-    // Use this for initialization
-    void OnEnable()
+    private NavMeshAgent agent;
+    private Vector3 destination;
+
+    // Start is called before the first frame update
+    private void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        timer = wanderTimer;
+        agent = GetComponent<NavMeshAgent>();
+        newWayPoint();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timer += Time.deltaTime;
-
-        if (timer >= wanderTimer)
+        if (Vector3.Distance(transform.position, destination) < 3)
         {
-            Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
-            agent.SetDestination(newPos);
-            timer = 0;
+            newWayPoint();
         }
     }
 
-    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    private void newWayPoint()
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
+        Vector3 point = new Vector3(Random.Range(xMin, xMax), transform.position.y, Random.Range(zMin, zMax));
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(point, out hit, 100f, NavMesh.GetAreaFromName("Walkable")))
+        {
+            destination = hit.position;
+            agent.SetDestination(destination);
+        }
+        else
+        {
+            destination = point;
+            agent.SetDestination(destination);
+        }
+    }
 
-        randDirection += origin;
-
-        UnityEngine.AI.NavMeshHit navHit;
-
-        UnityEngine.AI.NavMesh.SamplePosition(randDirection, out navHit, dist, layermask);
-
-        return navHit.position;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(destination, 1f);
     }
 }
