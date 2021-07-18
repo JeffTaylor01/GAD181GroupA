@@ -5,13 +5,17 @@ using UnityEngine;
 public class ContestantManager : MonoBehaviour
 {
 
+    public bool spawnAI;
+    public bool includePlayer;
+    public GameObject player;
+
+    public bool hasCeaseFire;
     public float ceaseFire = 60;
     public float timer = 0;
 
     public int AIAmount = 5;
     public GameObject prefab;
-    public GameObject[] pseudos;
-    public Material taggerColor;
+    public GameObject[] contestants;
 
     public GameObject tagger;
     private bool selectIT = true;
@@ -20,31 +24,54 @@ public class ContestantManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pseudos = new GameObject[AIAmount];
-
-        for (int i = 0; i < AIAmount; i++)
+        if (spawnAI)
         {
-            pseudos[i] = Instantiate(prefab, new Vector3(0, 1.35f, i * 1.5f), Quaternion.identity) as GameObject;
-            pseudos[i].name = "Pseudo" + (i+1);
+            if (includePlayer)
+            {
+                contestants = new GameObject[AIAmount + 1];
+                contestants[0] = player;
+                for (int i = 1; i < contestants.Length; i++)
+                {
+                    contestants[i] = Instantiate(prefab, new Vector3(0, 1.35f, i * 1.5f), Quaternion.identity) as GameObject;
+                    contestants[i].name = "Pseudo" + (i + 1);
+                }
+            }
+            else
+            {
+                contestants = new GameObject[AIAmount];
+                for (int i = 0; i < contestants.Length; i++)
+                {
+                    contestants[i] = Instantiate(prefab, new Vector3(0, 1.35f, i * 1.5f), Quaternion.identity) as GameObject;
+                    contestants[i].name = "Pseudo" + (i + 1);
+                }
+            }
+            
+            
         }
+        
     }
 
     // Update is called once per frame
     void Update()
-    {        
-        if (timer < ceaseFire && selectIT == true)
+    {
+        if (hasCeaseFire)
         {
-            timer += Time.deltaTime;
-            if (timer >= ceaseFire)
+            if (timer < ceaseFire && selectIT == true)
             {
-                int selected = Random.Range(0, AIAmount - 1);
-                Debug.Log("IT is Pseudo" + (selected + 1));
-                tagger = pseudos[selected];
-                //pseudos[selected].GetComponent<MeshRenderer>().material = taggerColor;
-                tagger.GetComponent<StateManager>().isIT = true;
-                selectIT = false;
+                timer += Time.deltaTime;
+                if (timer >= ceaseFire)
+                {
+                    int selected = Random.Range(0, contestants.Length - 1);
+
+                    tagger = contestants[selected];
+                    Debug.Log("IT is" + tagger.name);
+
+                    tagger.GetComponent<StateManager>().isIT = true;
+                    selectIT = false;
+                }
             }
         }
+        
     }
 
 

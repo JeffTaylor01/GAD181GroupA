@@ -3,37 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChaseState : State
+public class DummyState : State
 {
-    public WanderState wanderState;
-    
-    public GameObject[] targets;
-    public GameObject target;
 
+    public Material dummyColor;
+    public Material taggerColor;
     private StateManager stateInfo;
     private GameObject tagger;
-    public Material taggerColor;
-    private bool gotTargets;
 
+    private bool gotTargets;
+    public GameObject[] targets;
+    public GameObject target;
     public float distance;
 
     private void Start()
     {
         stateInfo = GetComponentInParent<StateManager>();
     }
+
     public override State RunCurrentState(NavMeshAgent agent)
     {
         tagger = stateInfo.contestants.tagger;
 
         if (isIT)
         {
-            //Debug.Log("Chasing");
-            if (checkMaterial())
-            {
-                GetComponentInParent<MeshRenderer>().material = taggerColor;
-            }
-            
-            //isIT = true;
+            GetComponentInParent<MeshRenderer>().material = taggerColor;
+
             if (!gotTargets)
             {
                 targets = getTargets();
@@ -45,16 +40,16 @@ public class ChaseState : State
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
                 tagged();
             }
-            
-            agent.SetDestination(target.transform.position);
+
             distance = Vector3.Distance(gameObject.transform.parent.position, target.transform.position);
-            return this;
         }
-        else
+        else if (checkMaterial())
         {
-            gotTargets = false;
-            return wanderState;
-        }     
+            GetComponentInParent<MeshRenderer>().material = dummyColor;
+        }
+
+
+        return this;
     }
 
     private GameObject[] getTargets()
@@ -77,7 +72,7 @@ public class ChaseState : State
     private void findClosest()
     {
         target = targets[0];
-        
+
         for (int i = 1; i < targets.Length; i++)
         {
             var dist = Vector3.Distance(transform.parent.position, target.transform.position);
@@ -97,7 +92,7 @@ public class ChaseState : State
 
     private bool checkMaterial()
     {
-        if (GetComponentInParent<MeshRenderer>().material != taggerColor)
+        if (GetComponentInParent<MeshRenderer>().material != dummyColor)
         {
             return true;
         }

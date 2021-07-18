@@ -6,12 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/UI.unity
-    guid: 0e54d7b6149bd414790ec6a340bf612b
-  - enabled: 1
-    path: Assets/Scenes/PlayerMovement.unity
-    guid: 5174072cb460f824ca0cb2d0cbf7c37a
-  - enabled: 1
-    path: Assets/Scenes/Pausemenu.unity
-    guid: 6032b16a001da9248871b7a39e245d33
+    path: Assets/Scenes/Chris/AI_Testing.unity
+    guid: 7831079c6640f3042b94586e68ee0958
   m_configObjects: {}

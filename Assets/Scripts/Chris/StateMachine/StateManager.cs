@@ -24,12 +24,11 @@ public class StateManager : MonoBehaviour
 
     private void Start()
     {
-        canTag = true;
         agent = GetComponent<NavMeshAgent>();
         agentSpeed = agent.speed;
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (runTagCooldown)
         {
@@ -58,25 +57,15 @@ public class StateManager : MonoBehaviour
             if (isIT)
             {
                 currentState.isIT = true;
+                canTag = true;
             }
             else
             {
                 currentState.isIT = false;
+                canTag = false;
             }
             RunStateMachine();
         }        
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("Tagged: " + collision.gameObject.name);
-        if (isIT)
-        {
-            collision.gameObject.GetComponent<StateManager>().isIT = true;
-            collision.gameObject.GetComponent<StateManager>().gotTagged();
-            isIT = false;
-
-        }
     }
 
     private void RunStateMachine()
