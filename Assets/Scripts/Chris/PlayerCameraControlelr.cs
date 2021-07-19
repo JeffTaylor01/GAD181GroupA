@@ -30,7 +30,7 @@ public class PlayerCameraControlelr : MonoBehaviour
         mouseX += Input.GetAxis("Mouse X") * rotSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * rotSpeed;
 
-        mouseY = Mathf.Clamp(mouseY, -35, 60);
+        mouseY = Mathf.Clamp(mouseY, -25, 60);
         transform.LookAt(target);
 
         target.rotation = Quaternion.Euler(mouseY, mouseX, 0);

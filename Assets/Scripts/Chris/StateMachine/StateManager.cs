@@ -22,6 +22,8 @@ public class StateManager : MonoBehaviour
     private float ignoreTime = 2;
     private float igTimer;
 
+    public bool shielded;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -86,18 +88,24 @@ public class StateManager : MonoBehaviour
 
     public void gotTagged()
     {
-        Debug.Log(gameObject.name + " gotTagged");
-        isIT = true;
-        runTagCooldown = true;
-        agent.speed = 0;
-        cooldownTimer = 0;
-        canTag = false;
+        if (!shielded)
+        {
+            Debug.Log(gameObject.name + " gotTagged");
+            isIT = true;
+            runTagCooldown = true;
+            agent.speed = 0;
+            cooldownTimer = 0;
+            canTag = false;
+        }        
     }
 
     public void taggedAnother()
     {
-        Debug.Log(gameObject.name + " taggedAnother");
-        isIT = false;
-        ignoreIT = true;
+        if (!shielded)
+        {
+            Debug.Log(gameObject.name + " taggedAnother");
+            isIT = false;
+            ignoreIT = true;
+        }        
     }
 }

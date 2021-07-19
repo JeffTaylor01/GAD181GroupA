@@ -38,7 +38,10 @@ public class PlayerState : State
             if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1) && stateInfo.canTag)
             {
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
-                tagged();
+                if (!target.GetComponent<StateManager>().shielded)
+                {
+                    tagged();
+                }
             }
 
             distance = Vector3.Distance(gameObject.transform.parent.position, target.transform.position);

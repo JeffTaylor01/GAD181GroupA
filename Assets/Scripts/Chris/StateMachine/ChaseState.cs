@@ -43,7 +43,10 @@ public class ChaseState : State
             if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1) && stateInfo.canTag)
             {
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
-                tagged();
+                if (!target.GetComponent<StateManager>().shielded)
+                {
+                    tagged();
+                }
             }
             
             agent.SetDestination(target.transform.position);

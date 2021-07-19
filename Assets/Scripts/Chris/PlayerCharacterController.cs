@@ -42,7 +42,7 @@ public class PlayerCharacterController : MonoBehaviour
 		grounded = false;
 	}
 
-	void OnCollisionStay()
+    void OnCollisionStay()
 	{
 		grounded = true;
 	}
