@@ -5,29 +5,38 @@ using UnityEngine;
 public class Shield : MonoBehaviour
 {
 
-    public bool destroyOnEnd;
     public GameObject prefab;
     public bool runShield;
     public float shieldTime = 6;
     public float timer;
 
-    private GameObject contestant;
+    public GameObject user;
     private GameObject shield;
     private StateManager stateInfo;
 
-    private Collider col;
-    private MeshRenderer mesh;
-
-    // Start is called before the first frame update
-    private void Start()
+    public void UseItem()
     {
-        col = GetComponent<Collider>();
-        mesh = GetComponent<MeshRenderer>();
+        stateInfo = user.GetComponent<StateManager>();
+        stateInfo.shielded = true;
+        stateInfo.itemUsed = true;
+
+        shield = Instantiate(prefab, user.transform);
+
+        runShield = true;
         timer = 0;
     }
 
-    // Update is called once per frame
-    private void Update()
+    private void RemoveShield()
+    {
+        Object.Destroy(shield);
+        stateInfo.shielded = false;
+        stateInfo.heldItem = null;
+        runShield = false;
+
+        Object.Destroy(gameObject);
+    }
+
+    public void RunTimer()
     {
         if (runShield)
         {
@@ -35,47 +44,8 @@ public class Shield : MonoBehaviour
             Debug.Log("Running Timer");
             if (timer >= shieldTime)
             {
-                RemoveShield(contestant);
+                RemoveShield();
             }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            Debug.Log(other.gameObject.name + " touched ShieldItem");
-            contestant = other.gameObject;
-            ShieldContestant(contestant);
-
-            if (destroyOnEnd)
-            {
-                col.enabled = false;
-                mesh.enabled = false;
-            }
-        }
-    }
-
-    private void ShieldContestant(GameObject character)
-    {
-        stateInfo = character.GetComponent<StateManager>();
-        stateInfo.shielded = true;
-
-        shield = Instantiate(prefab, character.transform);
-
-        runShield = true;
-        timer = 0;
-    }
-
-    private void RemoveShield(GameObject character)
-    {
-        Object.Destroy(shield);
-        stateInfo.shielded = false;
-        runShield = false;
-
-        if (destroyOnEnd)
-        {
-            Object.Destroy(gameObject);
         }
     }
 }

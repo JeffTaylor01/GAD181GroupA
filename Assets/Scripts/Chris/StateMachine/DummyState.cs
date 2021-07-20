@@ -35,7 +35,7 @@ public class DummyState : State
             }
 
             findClosest();
-            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1) && stateInfo.canTag)
+            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1.1) && stateInfo.canTag)
             {
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
                 if (!target.GetComponent<StateManager>().shielded)

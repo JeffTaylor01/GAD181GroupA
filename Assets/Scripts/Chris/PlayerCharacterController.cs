@@ -14,6 +14,9 @@ public class PlayerCharacterController : MonoBehaviour
 	private Rigidbody rigidbody;
 	private bool grounded = false;
 
+	public float ver;
+	public float hor;
+
 	private void Start()
 	{
 		rigidbody = GetComponent<Rigidbody>();
@@ -50,6 +53,8 @@ public class PlayerCharacterController : MonoBehaviour
 	private Vector3 CalculateTargetVelocity()
     {
 		Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		hor = Input.GetAxis("Horizontal");
+		ver = Input.GetAxis("Vertical");
 		targetVelocity = transform.TransformDirection(targetVelocity) * speed;
 
 		return targetVelocity;

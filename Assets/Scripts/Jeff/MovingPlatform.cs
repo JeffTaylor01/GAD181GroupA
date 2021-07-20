@@ -7,10 +7,6 @@ public class MovingPlatform : MonoBehaviour
     public List<Transform> waypoints;
     public float moveSpeed = 2;
     public int target;
-    void Update()
-    {
-        
-    }
 
     private void FixedUpdate()
     {
@@ -26,6 +22,22 @@ public class MovingPlatform : MonoBehaviour
             {
                 target += 1;
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            collision.gameObject.transform.SetParent(transform);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            collision.gameObject.transform.parent = null;
         }
     }
 

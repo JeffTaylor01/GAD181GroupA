@@ -22,6 +22,68 @@ public class PlayerState : State
 
     public override State RunCurrentState(NavMeshAgent agent)
     {
+        if (stateInfo.heldItem == null)
+        {
+            stateInfo.itemUsed = false;
+        }
+        if (stateInfo.heldItem != null)
+        {
+            bool useItem = false;
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Player Pressed E");
+                useItem = true;
+            }
+
+            if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
+            {
+                var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
+                item.user = transform.parent.gameObject;
+
+                if (useItem && !stateInfo.itemUsed)
+                {
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+            else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
+            {
+                var item = stateInfo.heldItem.GetComponent<Shield>();
+                item.user = transform.parent.gameObject;
+
+                if (useItem && !stateInfo.itemUsed)
+                {
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+            else if (stateInfo.heldItem.tag.Equals("StunItem"))
+            {
+                var item = stateInfo.heldItem.GetComponent<Stun>();
+                item.user = transform.parent.gameObject;
+                item.startPos = stateInfo.gameObject.transform.position;
+
+                if (Input.GetMouseButton(1))
+                {
+                    Debug.Log("Player Aiming");
+                    item.aiming = true;
+                }
+                else
+                {
+                    item.aiming = false;
+                }
+
+                item.Aim();
+
+                if (useItem && !stateInfo.itemUsed && Input.GetMouseButton(1))
+                {
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+        }
+
+
         tagger = stateInfo.contestants.tagger;
 
         if (isIT)
@@ -35,7 +97,7 @@ public class PlayerState : State
             }
 
             findClosest();
-            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1) && stateInfo.canTag)
+            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1.1) && stateInfo.canTag)
             {
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
                 if (!target.GetComponent<StateManager>().shielded)

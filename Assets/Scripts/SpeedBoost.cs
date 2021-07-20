@@ -5,73 +5,36 @@ using UnityEngine.AI;
 
 public class SpeedBoost : MonoBehaviour
 {
-    public bool destroyOnEnd;
     public float boost = 25;
     public float boostTime;
 
     public bool runBoost;
     public float timer;
     private float playerSpeed;
-    private GameObject contestant;
+    public GameObject user;
+    private StateManager stateInfo;
 
-    private Collider col;
-    private MeshRenderer mesh;
-
-    // Start is called before the first frame update
-    private void Start()
+    public void UseItem()
     {
-        col = GetComponent<Collider>();
-        mesh = GetComponent<MeshRenderer>();
-        timer = 0;
-    }
+        stateInfo = user.GetComponent<StateManager>();
+        stateInfo.itemUsed = true;
 
-    private void Update()
-    {
-        if (runBoost)
-        {
-            timer += Time.deltaTime;
-            Debug.Log("Running Timer");
-            if (timer >= boostTime)
-            {
-                RevokeBoost(contestant);
-            }
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag.Equals("Player"))
-        {
-            Debug.Log(other.gameObject.name + " touched SpeedBoostItem");
-            contestant = other.gameObject;
-            ApplyBoost(contestant);
-
-            if (destroyOnEnd)
-            {
-                col.enabled = false;
-                mesh.enabled = false;
-            }
-        }
-    }
-
-    private void ApplyBoost(GameObject character)
-    {
         bool usePC = false;
 
-        if (character.GetComponent<PlayerCharacterController>() != null)
+        if (user.GetComponent<PlayerCharacterController>() != null)
         {
             usePC = true;
         }
 
         if (usePC)
         {
-            var pc = character.GetComponent<PlayerCharacterController>();
+            var pc = user.GetComponent<PlayerCharacterController>();
             playerSpeed = pc.speed;
             pc.speed = boost;
         }
         else
         {
-            var pc = character.GetComponent<NavMeshAgent>();
+            var pc = user.GetComponent<NavMeshAgent>();
             playerSpeed = pc.speed;
             pc.speed = boost;
         }
@@ -81,31 +44,42 @@ public class SpeedBoost : MonoBehaviour
         timer = 0;
     }
 
-    private void RevokeBoost(GameObject character)
+    private void RevokeBoost()
     {
         bool usePC = false;
 
-        if (character.GetComponent<PlayerCharacterController>() != null)
+        if (user.GetComponent<PlayerCharacterController>() != null)
         {
             usePC = true;
         }
 
         if (usePC)
         {
-            var pc = character.GetComponent<PlayerCharacterController>();
+            var pc = user.GetComponent<PlayerCharacterController>();
             pc.speed = playerSpeed;
         }
         else
         {
-            var pc = character.GetComponent<NavMeshAgent>();
+            var pc = user.GetComponent<NavMeshAgent>();
             pc.speed = playerSpeed;
         }
 
         runBoost = false;
+        stateInfo.heldItem = null;
 
-        if (destroyOnEnd)
+        Object.Destroy(gameObject);
+    }
+
+    public void RunTimer()
+    {
+        if (runBoost)
         {
-            Object.Destroy(gameObject);
+            timer += Time.deltaTime;
+            Debug.Log("Running Timer");
+            if (timer >= boostTime)
+            {
+                RevokeBoost();
+            }
         }
     }
 }

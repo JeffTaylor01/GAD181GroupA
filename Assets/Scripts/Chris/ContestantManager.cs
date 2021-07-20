@@ -14,6 +14,7 @@ public class ContestantManager : MonoBehaviour
     public float timer = 0;
 
     public int AIAmount = 5;
+    public Vector3 spawnSpacing;
     public GameObject prefab;
     public GameObject[] contestants;
 
@@ -32,7 +33,7 @@ public class ContestantManager : MonoBehaviour
                 contestants[0] = player;
                 for (int i = 1; i < contestants.Length; i++)
                 {
-                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(0, 1.35f, i * 1.5f), Quaternion.identity) as GameObject;
+                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x*i-1, spawnSpacing.y, spawnSpacing.z * i-1), Quaternion.identity) as GameObject;
                     contestants[i].name = "Pseudo" + (i + 1);
                 }
             }
@@ -41,7 +42,7 @@ public class ContestantManager : MonoBehaviour
                 contestants = new GameObject[AIAmount];
                 for (int i = 0; i < contestants.Length; i++)
                 {
-                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(0, 1.35f, i * 1.5f), Quaternion.identity) as GameObject;
+                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x * i, spawnSpacing.y, spawnSpacing.z * i), Quaternion.identity) as GameObject;
                     contestants[i].name = "Pseudo" + (i + 1);
                 }
             }

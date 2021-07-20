@@ -23,6 +23,8 @@ public class StateManager : MonoBehaviour
     private float igTimer;
 
     public bool shielded;
+    public GameObject heldItem;
+    public bool itemUsed;
 
     private void Start()
     {
@@ -31,7 +33,8 @@ public class StateManager : MonoBehaviour
     }
     // Update is called once per frame
     private void Update()
-    {
+    {             
+
         if (runTagCooldown)
         {
             cooldownTimer += Time.deltaTime;
