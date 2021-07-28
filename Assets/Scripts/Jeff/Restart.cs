@@ -5,8 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Restart : MonoBehaviour
 {
-    public void RestartGame()
+    
+    private void OnTriggerEnter(Collider other)
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("FinalLevel");
     }
+
+   
 }
