@@ -4,26 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-public class mainMenu : MonoBehaviour
+public class pauseGame : MonoBehaviour
 {
+    // Start is called before the first frame update
     public static bool GameIsPaused = false;
     public GameObject PausemenuUI;
-    public void StartGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
 
-    public void QuitGame()
+    void Update()
     {
-        Application.Quit(); 
-    }
-
-     void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(GameIsPaused)
+            if (GameIsPaused)
             {
                 Resume();
             }
@@ -45,5 +36,4 @@ public class mainMenu : MonoBehaviour
             }
         }
     }
-
 }
