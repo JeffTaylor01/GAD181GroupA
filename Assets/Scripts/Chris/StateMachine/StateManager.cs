@@ -8,6 +8,7 @@ public class StateManager : MonoBehaviour
 
     public ContestantManager contestants;
     public bool isIT;
+    public bool isPlayer;
 
     public State currentState;
     private NavMeshAgent agent;
@@ -24,6 +25,7 @@ public class StateManager : MonoBehaviour
 
     public bool shielded;
     public GameObject heldItem;
+    public bool itemInRange;
     public bool itemUsed;
 
     private void Start()
@@ -69,6 +71,7 @@ public class StateManager : MonoBehaviour
                 currentState.isIT = false;
                 canTag = false;
             }
+            FindItem();
             RunStateMachine();
         }        
     }
@@ -87,6 +90,19 @@ public class StateManager : MonoBehaviour
     private void SwitchToNextState(State nextState)
     {
         currentState = nextState;
+    }
+
+    private void FindItem()
+    {
+        GameObject[] spawners = GameObject.FindGameObjectsWithTag("ItemSpawner");
+        itemInRange = false;
+        foreach (GameObject spawner in spawners)
+        {
+            if (Vector3.Distance(transform.position, spawner.gameObject.transform.position) <= 25 && spawner.GetComponent<ItemSpawner>().itemSpawned)
+            {
+                itemInRange = true;
+            }
+        }
     }
 
     public void gotTagged()
@@ -110,5 +126,5 @@ public class StateManager : MonoBehaviour
             isIT = false;
             ignoreIT = true;
         }        
-    }
+    }    
 }

@@ -7,6 +7,7 @@ public class WanderState : State
 {
     public FleeState fleeState;
     public ChaseState chaseState;
+    public FindItemState itemState;
 
     public float xMax = 10;
     public float xMin = -10;
@@ -18,6 +19,9 @@ public class WanderState : State
     private GameObject tagger;
     public Material wanderColor;
 
+    public float itemUseChance;
+    private float chanceTimer = 0;
+
     private void Start()
     {
         stateInfo = GetComponentInParent<StateManager>();
@@ -25,6 +29,7 @@ public class WanderState : State
     }
     public override State RunCurrentState(NavMeshAgent agent)
     {
+        runChance();
         tagger = stateInfo.contestants.tagger;
 
         if (isIT)
@@ -37,13 +42,76 @@ public class WanderState : State
             {
                 GetComponentInParent<MeshRenderer>().material = wanderColor;
             }
-
+            if (stateInfo.heldItem == null && stateInfo.itemInRange)
+            {
+                return itemState;
+            }
             if (canSeeIT() && !stateInfo.ignoreIT)
             {
                 return fleeState;
             }
             else
             {
+                if (stateInfo.heldItem != null)
+                {
+                    bool useItem = false;
+
+                    if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
+                    {
+                        if (itemUseChance > 0.8)
+                        {
+                            Debug.Log("Pseudo Used Item");
+                            useItem = true;
+                        }
+                        var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
+                        item.user = transform.parent.gameObject;
+
+                        if (useItem && !stateInfo.itemUsed)
+                        {
+                            item.UseItem();
+                        }
+                        item.RunTimer();
+                    }
+                    else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
+                    {
+                        if (itemUseChance > 0.95)
+                        {
+                            Debug.Log("Pseudo Used Item");
+                            useItem = true;
+                        }
+                        var item = stateInfo.heldItem.GetComponent<Shield>();
+                        item.user = transform.parent.gameObject;
+
+                        if (useItem && !stateInfo.itemUsed)
+                        {
+                            item.UseItem();
+                        }
+                        item.RunTimer();
+                    }
+                    else if (stateInfo.heldItem.tag.Equals("StunItem"))
+                    {
+                        if (itemUseChance > 0.5)
+                        {
+                            Debug.Log("Pseudo Used Item");
+                            useItem = true;
+                        }
+                        var item = stateInfo.heldItem.GetComponent<Stun>();
+                        item.user = transform.parent.gameObject;
+                        item.startPos = stateInfo.gameObject.transform.position;                        
+
+                        if (useItem && !stateInfo.itemUsed)
+                        {
+                            item.aiming = true;
+                            item.Aim();
+                            item.UseItem();
+                        }
+                        item.RunTimer();
+                    }
+                }
+                else
+                {
+                    itemUseChance = 0;
+                }
                 //Debug.Log("Wandering");
                 if (Vector3.Distance(transform.parent.position, destination) < 10)
                 {
@@ -94,6 +162,21 @@ public class WanderState : State
         {
             return false;
         }
+    }
+
+    private void runChance()
+    {
+        if (chanceTimer >= 3 && stateInfo.heldItem != null)
+        {
+            itemUseChance = Random.value;
+            chanceTimer = 0;
+        }
+
+        if (stateInfo.heldItem != null)
+        {
+            chanceTimer += Time.deltaTime;
+            Debug.Log(chanceTimer);
+        }        
     }
 
     private void OnDrawGizmos()

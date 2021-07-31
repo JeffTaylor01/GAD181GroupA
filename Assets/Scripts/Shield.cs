@@ -30,6 +30,7 @@ public class Shield : MonoBehaviour
     {
         Object.Destroy(shield);
         stateInfo.shielded = false;
+        stateInfo.itemUsed = false;
         stateInfo.heldItem = null;
         runShield = false;
 

@@ -6,7 +6,8 @@ using UnityEngine.AI;
 public class ChaseState : State
 {
     public WanderState wanderState;
-    
+    public FindItemState itemState;
+
     public GameObject[] targets;
     public GameObject target;
 
@@ -24,7 +25,10 @@ public class ChaseState : State
     public override State RunCurrentState(NavMeshAgent agent)
     {
         tagger = stateInfo.contestants.tagger;
-
+        if (stateInfo.heldItem == null && stateInfo.itemInRange)
+        {
+            return itemState;
+        }
         if (isIT)
         {
             //Debug.Log("Chasing");
