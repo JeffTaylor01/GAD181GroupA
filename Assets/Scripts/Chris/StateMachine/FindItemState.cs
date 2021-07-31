@@ -50,11 +50,4 @@ public class FindItemState : State
         Debug.Log(gameObject.name + ": Going to item");
         return itemDest;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, 25);
-        Gizmos.DrawSphere(destination, 1);
-    }
 }

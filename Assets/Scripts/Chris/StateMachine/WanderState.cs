@@ -13,7 +13,7 @@ public class WanderState : State
     public float xMin = -10;
     public float zMax = 10;
     public float zMin = -10;
-    private Vector3 destination;
+    public Vector3 destination;
 
     private StateManager stateInfo;
     private GameObject tagger;

@@ -18,12 +18,16 @@ public class ChaseState : State
 
     public float distance;
 
+    public float itemUseChance;
+    private float chanceTimer = 0;
+
     private void Start()
     {
         stateInfo = GetComponentInParent<StateManager>();
     }
     public override State RunCurrentState(NavMeshAgent agent)
     {
+        runChance();
         tagger = stateInfo.contestants.tagger;
         if (stateInfo.heldItem == null && stateInfo.itemInRange)
         {
@@ -36,7 +40,68 @@ public class ChaseState : State
             {
                 GetComponentInParent<MeshRenderer>().material = taggerColor;
             }
-            
+
+            if (stateInfo.heldItem != null)
+            {
+                bool useItem = false;
+
+                if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
+                {
+                    if (itemUseChance > 0.4)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
+                    item.user = transform.parent.gameObject;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+                else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
+                {
+                    if (itemUseChance > 0.80)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<Shield>();
+                    item.user = transform.parent.gameObject;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+                else if (stateInfo.heldItem.tag.Equals("StunItem"))
+                {
+                    if (itemUseChance > 0.5)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<Stun>();
+                    item.user = transform.parent.gameObject;
+                    item.startPos = stateInfo.gameObject.transform.position;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.aiming = true;
+                        item.Aim();
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+            }
+            else
+            {
+                itemUseChance = 0;
+            }
+
             //isIT = true;
             if (!gotTargets)
             {
@@ -111,6 +176,21 @@ public class ChaseState : State
         else
         {
             return false;
+        }
+    }
+
+    private void runChance()
+    {
+        if (chanceTimer >= 3 && stateInfo.heldItem != null)
+        {
+            itemUseChance = Random.value;
+            chanceTimer = 0;
+        }
+
+        if (stateInfo.heldItem != null)
+        {
+            chanceTimer += Time.deltaTime;
+            Debug.Log(chanceTimer);
         }
     }
 }

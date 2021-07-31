@@ -78,6 +78,8 @@ public class Stun : MonoBehaviour
         stateInfo.itemUsed = false;
         stateInfo.heldItem = null;
 
+        Object.Destroy(targetPos.gameObject);
+        Object.Destroy(projectile);
         Object.Destroy(gameObject);
     }
 

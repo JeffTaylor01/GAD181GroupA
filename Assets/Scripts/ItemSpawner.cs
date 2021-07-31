@@ -50,6 +50,16 @@ public class ItemSpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        TriggerSpawner(other);     
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        TriggerSpawner(other);
+    }
+
+    private void TriggerSpawner(Collider other)
+    {
         if (itemSpawned)
         {
             if (other.tag.Equals("Player"))
@@ -61,8 +71,8 @@ public class ItemSpawner : MonoBehaviour
 
                     addItemToPlayer(other.gameObject);
                 }
-            }                           
-        }        
+            }
+        }
     }
 
     private void spawnItem()
