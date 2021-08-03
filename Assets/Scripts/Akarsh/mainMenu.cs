@@ -7,43 +7,37 @@ using UnityEngine.UI;
 
 public class mainMenu : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
-    public GameObject PausemenuUI;
-    public void StartGame()
+   
+    [SerializeField] private GameObject pausePanel;
+    void Start()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        pausePanel.SetActive(false);
     }
-
-    public void QuitGame()
+    void Update()
     {
-        Application.Quit(); 
-    }
-
-     void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(GameIsPaused)
+            if (!pausePanel.activeInHierarchy)
             {
-                Resume();
+                PauseGame();
             }
-            else
+            if (pausePanel.activeInHierarchy)
             {
-                Pause();
-            }
-            void Resume()
-            {
-                PausemenuUI.SetActive(false);
-                Time.timeScale = 1f;
-                GameIsPaused = false;
-            }
-            void Pause()
-            {
-                PausemenuUI.SetActive(true);
-                Time.timeScale = 0f; // freezes time in pause
-                GameIsPaused = true;
+                ContinueGame();
             }
         }
     }
-
+    
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+        pausePanel.SetActive(true);
+        //Disable scripts that still work while timescale is set to 0
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+        //enable the scripts again
+    }
 }

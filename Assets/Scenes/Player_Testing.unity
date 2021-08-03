@@ -1396,6 +1396,7 @@ MonoBehaviour:
   items:
   - {fileID: 1323593364}
   item: {fileID: 0}
+  itemSpawned: 0
   cooldownTime: 5
   timer: 0
   mat: {fileID: 0}
@@ -2029,6 +2030,7 @@ MonoBehaviour:
   items:
   - {fileID: 1421398392}
   item: {fileID: 0}
+  itemSpawned: 0
   cooldownTime: 5
   timer: 0
   mat: {fileID: 0}
@@ -6034,6 +6036,7 @@ MonoBehaviour:
   items:
   - {fileID: 1645946502}
   item: {fileID: 0}
+  itemSpawned: 0
   cooldownTime: 5
   timer: 0
   mat: {fileID: 0}
