@@ -23,6 +23,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Platform Big
       objectReference: {fileID: 0}
+    - target: {fileID: 1100871258480166916, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_TagString
+      value: EnvironmentObject
+      objectReference: {fileID: 0}
     - target: {fileID: 1100871258480166919, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: m_RootOrder
       value: 0

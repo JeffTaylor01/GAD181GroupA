@@ -8,6 +8,7 @@ public class FleeState : State
     public WanderState wanderState;
     public ChaseState chaseState;
     public float itDistanceRun = 5;
+    public UseEnvironmentObjectState objectState;
 
     private StateManager stateInfo;
     private GameObject tagger;

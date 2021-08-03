@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2820417133294512675
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 118122551458078002}
+  - component: {fileID: 594016751788275748}
+  m_Layer: 0
+  m_Name: ObjectState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &118122551458078002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820417133294512675}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6957560175450877245}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &594016751788275748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2820417133294512675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a65cba503b2cc64abc31e886aa22a0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isIT: 0
+  chaseState: {fileID: 6957560175534124033}
 --- !u!1 &6823769799220687088
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,7 +137,9 @@ MonoBehaviour:
   wanderState: {fileID: 6957560175351249445}
   chaseState: {fileID: 6957560175534124033}
   itDistanceRun: 10
+  objectState: {fileID: 0}
   fleeColor: {fileID: 2100000, guid: c74204a7fe4f57048be1aa595c981606, type: 2}
+  itemUseChance: 0
 --- !u!1 &6957560175050119323
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,11 +283,16 @@ MonoBehaviour:
   fleeState: {fileID: 6957560174329899396}
   chaseState: {fileID: 6957560175534124033}
   itemState: {fileID: 5428366482651146890}
+  objectState: {fileID: 594016751788275748}
   xMax: 100
   xMin: -100
   zMax: 100
   zMin: -100
+  destination: {x: 0, y: 0, z: 0}
   wanderColor: {fileID: 2100000, guid: 85998a8c395f680408adc7903e200f97, type: 2}
+  itemUseChance: 0
+  objectUseChance: 0
+  objectCRun: 0
 --- !u!1 &6957560175450877243
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +331,7 @@ Transform:
   - {fileID: 6957560175534124034}
   - {fileID: 6957560174329899403}
   - {fileID: 3276967096338806440}
+  - {fileID: 118122551458078002}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -404,7 +457,9 @@ MonoBehaviour:
   ignoreIT: 0
   shielded: 0
   heldItem: {fileID: 0}
+  itemInRange: 0
   itemUsed: 0
+  objectInRange: 0
 --- !u!1 &6957560175534124035
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +506,9 @@ MonoBehaviour:
   isIT: 0
   wanderState: {fileID: 6957560175351249445}
   itemState: {fileID: 5428366482651146890}
+  objectState: {fileID: 0}
   targets: []
   target: {fileID: 0}
   taggerColor: {fileID: 2100000, guid: 02ebbbd988a3522458e2248fa670155e, type: 2}
   distance: 0
+  itemUseChance: 0

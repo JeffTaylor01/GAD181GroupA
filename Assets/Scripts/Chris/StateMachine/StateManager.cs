@@ -27,6 +27,7 @@ public class StateManager : MonoBehaviour
     public GameObject heldItem;
     public bool itemInRange;
     public bool itemUsed;
+    public bool objectInRange;
 
     private void Start()
     {
@@ -72,6 +73,7 @@ public class StateManager : MonoBehaviour
                 canTag = false;
             }
             FindItem();
+            FindObject();
             RunStateMachine();
         }        
     }
@@ -101,6 +103,19 @@ public class StateManager : MonoBehaviour
             if (Vector3.Distance(transform.position, spawner.gameObject.transform.position) <= 25 && spawner.GetComponent<ItemSpawner>().itemSpawned)
             {
                 itemInRange = true;
+            }
+        }
+    }
+
+    private void FindObject()
+    {
+        GameObject[] objects = GameObject.FindGameObjectsWithTag("EnvironmentObject");
+        objectInRange = false;
+        foreach (GameObject eObject in objects)
+        {
+            if (Vector3.Distance(transform.position, eObject.gameObject.transform.position) <= 25)
+            {
+                objectInRange = true;
             }
         }
     }

@@ -7,6 +7,7 @@ public class ChaseState : State
 {
     public WanderState wanderState;
     public FindItemState itemState;
+    //public UseEnvironmentObjectState objectState;
 
     public GameObject[] targets;
     public GameObject target;
@@ -19,7 +20,7 @@ public class ChaseState : State
     public float distance;
 
     public float itemUseChance;
-    private float chanceTimer = 0;
+    private float itemCTimer = 0;    
 
     private void Start()
     {
@@ -33,6 +34,7 @@ public class ChaseState : State
         {
             return itemState;
         }
+
         if (isIT)
         {
             //Debug.Log("Chasing");
@@ -41,66 +43,7 @@ public class ChaseState : State
                 GetComponentInParent<MeshRenderer>().material = taggerColor;
             }
 
-            if (stateInfo.heldItem != null)
-            {
-                bool useItem = false;
-
-                if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
-                {
-                    if (itemUseChance > 0.4)
-                    {
-                        Debug.Log("Pseudo Used Item");
-                        useItem = true;
-                    }
-                    var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
-                    item.user = transform.parent.gameObject;
-
-                    if (useItem && !stateInfo.itemUsed)
-                    {
-                        item.UseItem();
-                    }
-                    item.RunTimer();
-                }
-                else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
-                {
-                    if (itemUseChance > 0.80)
-                    {
-                        Debug.Log("Pseudo Used Item");
-                        useItem = true;
-                    }
-                    var item = stateInfo.heldItem.GetComponent<Shield>();
-                    item.user = transform.parent.gameObject;
-
-                    if (useItem && !stateInfo.itemUsed)
-                    {
-                        item.UseItem();
-                    }
-                    item.RunTimer();
-                }
-                else if (stateInfo.heldItem.tag.Equals("StunItem"))
-                {
-                    if (itemUseChance > 0.5)
-                    {
-                        Debug.Log("Pseudo Used Item");
-                        useItem = true;
-                    }
-                    var item = stateInfo.heldItem.GetComponent<Stun>();
-                    item.user = transform.parent.gameObject;
-                    item.startPos = stateInfo.gameObject.transform.position;
-
-                    if (useItem && !stateInfo.itemUsed)
-                    {
-                        item.aiming = true;
-                        item.Aim();
-                        item.UseItem();
-                    }
-                    item.RunTimer();
-                }
-            }
-            else
-            {
-                itemUseChance = 0;
-            }
+            ItemLogic();
 
             //isIT = true;
             if (!gotTargets)
@@ -179,18 +122,81 @@ public class ChaseState : State
         }
     }
 
+    private void ItemLogic()
+    {
+        if (stateInfo.heldItem != null)
+        {
+            bool useItem = false;
+
+            if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
+            {
+                if (itemUseChance > 0.4)
+                {
+                    Debug.Log("Pseudo Used Item");
+                    useItem = true;
+                }
+                var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
+                item.user = transform.parent.gameObject;
+
+                if (useItem && !stateInfo.itemUsed)
+                {
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+            else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
+            {
+                if (itemUseChance > 0.80)
+                {
+                    Debug.Log("Pseudo Used Item");
+                    useItem = true;
+                }
+                var item = stateInfo.heldItem.GetComponent<Shield>();
+                item.user = transform.parent.gameObject;
+
+                if (useItem && !stateInfo.itemUsed)
+                {
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+            else if (stateInfo.heldItem.tag.Equals("StunItem"))
+            {
+                if (itemUseChance > 0.5)
+                {
+                    Debug.Log("Pseudo Used Item");
+                    useItem = true;
+                }
+                var item = stateInfo.heldItem.GetComponent<Stun>();
+                item.user = transform.parent.gameObject;
+                item.startPos = stateInfo.gameObject.transform.position;
+
+                if (useItem && !stateInfo.itemUsed)
+                {
+                    item.aiming = true;
+                    item.Aim();
+                    item.UseItem();
+                }
+                item.RunTimer();
+            }
+        }
+        else
+        {
+            itemUseChance = 0;
+        }
+    }
+
     private void runChance()
     {
-        if (chanceTimer >= 3 && stateInfo.heldItem != null)
+        if (itemCTimer >= 3 && stateInfo.heldItem != null)
         {
             itemUseChance = Random.value;
-            chanceTimer = 0;
+            itemCTimer = 0;
         }
 
         if (stateInfo.heldItem != null)
         {
-            chanceTimer += Time.deltaTime;
-            Debug.Log(chanceTimer);
+            itemCTimer += Time.deltaTime;
         }
     }
 }

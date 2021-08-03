@@ -8,6 +8,8 @@ TagManager:
   - SpeedBoostItem
   - StunItem
   - ItemSpawner
+  - Shield
+  - EnvironmentObject
   layers:
   - Default
   - TransparentFX
