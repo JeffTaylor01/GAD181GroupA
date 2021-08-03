@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3223919913301518672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 1, z: 5}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3223919913511425497}
@@ -114,10 +114,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contestants: {fileID: 0}
   isIT: 0
+  isPlayer: 0
   currentState: {fileID: 3223919913511425496}
   canTag: 0
   ignoreIT: 0
   shielded: 0
+  heldItem: {fileID: 0}
+  itemUsed: 0
 --- !u!195 &3223919913301518682
 NavMeshAgent:
   m_ObjectHideFlags: 0

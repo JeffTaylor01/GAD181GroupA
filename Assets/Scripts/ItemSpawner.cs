@@ -8,7 +8,7 @@ public class ItemSpawner : MonoBehaviour
     public GameObject[] items;
     public GameObject item;
 
-    bool itemSpawned;
+    public bool itemSpawned;
     bool runCooldown;
     public float cooldownTime;
     public float timer;
@@ -50,18 +50,29 @@ public class ItemSpawner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        TriggerSpawner(other);     
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        TriggerSpawner(other);
+    }
+
+    private void TriggerSpawner(Collider other)
+    {
         if (itemSpawned)
         {
-            if (other.GetComponent<StateManager>() != null)
+            if (other.tag.Equals("Player"))
             {
+                Debug.Log("Player touched spawner");
                 if (other.gameObject.GetComponent<StateManager>().heldItem == null)
                 {
                     runCooldown = true;
 
                     addItemToPlayer(other.gameObject);
                 }
-            }                           
-        }        
+            }
+        }
     }
 
     private void spawnItem()

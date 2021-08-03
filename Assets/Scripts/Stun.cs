@@ -15,7 +15,7 @@ public class Stun : MonoBehaviour
     public GameObject projectile;
     public GameObject user;
     private StateManager stateInfo;
-    private Camera camera;
+    private bool userPC;
 
     public Transform targetPos;
     public Vector3 startPos;
@@ -26,8 +26,21 @@ public class Stun : MonoBehaviour
 
     private Collider[] collisions;
 
+    private void CheckUser()
+    {
+        if (user.GetComponent<PlayerCharacterController>() != null)
+        {
+            userPC = true;
+        }
+        else
+        {
+            userPC = false;
+        }
+    }
+
     public void UseItem()
     {
+        CheckUser();
         stateInfo = user.GetComponent<StateManager>();
         stateInfo.itemUsed = true;
         thrown = true;
@@ -62,8 +75,11 @@ public class Stun : MonoBehaviour
         }
 
         runStun = false;
+        stateInfo.itemUsed = false;
         stateInfo.heldItem = null;
 
+        Object.Destroy(targetPos.gameObject);
+        Object.Destroy(projectile);
         Object.Destroy(gameObject);
     }
 
@@ -90,34 +106,62 @@ public class Stun : MonoBehaviour
 
     public void Aim()
     {
-        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
-        if (aiming)
+        CheckUser();
+        if (userPC)
         {
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (Vector3.Distance(startPos, hit.point) <= aimRange)
-                {
-                    targetPos.position = hit.point;
-                    targetPos.gameObject.GetComponent<MeshRenderer>().enabled = true;
-                }
-                else
-                {
-                    targetPos.gameObject.GetComponent<MeshRenderer>().enabled = false;
-                }
+            var camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            RaycastHit hit;
+            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
+            if (aiming)
+            {
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (Vector3.Distance(startPos, hit.point) <= aimRange)
+                    {
+                        targetPos.position = hit.point;
+                        targetPos.gameObject.GetComponent<MeshRenderer>().enabled = true;
+                    }
+                    else
+                    {
+                        targetPos.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    }
+
+                }
+            }
+            else
+            {
+                targetPos.gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
         else
         {
-            targetPos.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            if (aiming)
+            {
+                var aimPos = user.transform.position;
+                int xType = Random.Range(0, 1);     // 0 - Negative || 1 - Positive
+                float xPos = Random.Range(stunRadius / 2, aimRange);
+                if (xType == 0) { xPos *= -1; }
+                int zType = Random.Range(0, 1);     // 0 - Negative || 1 - Positive
+                float zPos = Random.Range(stunRadius / 2, aimRange);
+                if (zType == 0) { zPos *= -1; }
+
+                aimPos.x += xPos;
+                aimPos.z += zPos;
+                RaycastHit hit;
+                Ray ray = new Ray(new Vector3(xPos, 200, zPos), Vector3.down);
+                Physics.Raycast(ray, out hit);
+                aimPos.y = hit.point.y;
+
+                targetPos.position = aimPos;
+            }                
         }
     }
 
     private void Throw()
     {
+        targetPos.parent = null;
+        projectile.gameObject.transform.parent = null;
         projectile.GetComponent<MeshRenderer>().enabled = true;
         float x0 = startPos.x;
         float x1 = targetPos.position.x;
@@ -175,14 +219,5 @@ public class Stun : MonoBehaviour
             }
         }
         runStun = true;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (camera != null)
-        {
-            Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-            Gizmos.DrawLine(startPos, targetPos.position);
-        }
     }
 }

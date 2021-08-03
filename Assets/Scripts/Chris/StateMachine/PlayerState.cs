@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class PlayerState : State
 {
     private StateManager stateInfo;
-    private GameObject tagger;
     public Material playerColor;
     public Material taggerColor;
 
@@ -82,9 +81,6 @@ public class PlayerState : State
                 item.RunTimer();
             }
         }
-
-
-        tagger = stateInfo.contestants.tagger;
 
         if (isIT)
         {

@@ -65,6 +65,7 @@ public class SpeedBoost : MonoBehaviour
         }
 
         runBoost = false;
+        stateInfo.itemUsed = false;
         stateInfo.heldItem = null;
 
         Object.Destroy(gameObject);

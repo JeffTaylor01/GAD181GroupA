@@ -11,7 +11,10 @@ public class FleeState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Material fleeColor;    
+    public Material fleeColor;
+
+    public float itemUseChance;
+    private float chanceTimer = 0;
 
     private void Start()
     {
@@ -20,6 +23,7 @@ public class FleeState : State
 
     public override State RunCurrentState(NavMeshAgent agent)
     {
+        runChance();
         tagger = stateInfo.contestants.tagger;
 
         if (isIT)
@@ -31,6 +35,67 @@ public class FleeState : State
             if (checkMaterial())
             {
                 GetComponentInParent<MeshRenderer>().material = fleeColor;
+            }
+
+            if (stateInfo.heldItem != null)
+            {
+                bool useItem = false;
+
+                if (stateInfo.heldItem.tag.Equals("SpeedBoostItem"))
+                {
+                    if (itemUseChance > 0.2)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<SpeedBoost>();
+                    item.user = transform.parent.gameObject;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+                else if (stateInfo.heldItem.tag.Equals("ShieldItem"))
+                {
+                    if (itemUseChance > 0.4)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<Shield>();
+                    item.user = transform.parent.gameObject;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+                else if (stateInfo.heldItem.tag.Equals("StunItem"))
+                {
+                    if (itemUseChance > 0.5)
+                    {
+                        Debug.Log("Pseudo Used Item");
+                        useItem = true;
+                    }
+                    var item = stateInfo.heldItem.GetComponent<Stun>();
+                    item.user = transform.parent.gameObject;
+                    item.startPos = stateInfo.gameObject.transform.position;
+
+                    if (useItem && !stateInfo.itemUsed)
+                    {
+                        item.aiming = true;
+                        item.Aim();
+                        item.UseItem();
+                    }
+                    item.RunTimer();
+                }
+            }
+            else
+            {
+                itemUseChance = 0;
             }
 
             if (!canSeeIT() || stateInfo.ignoreIT)
@@ -77,6 +142,21 @@ public class FleeState : State
         else
         {
             return false;
+        }
+    }
+
+    private void runChance()
+    {
+        if (chanceTimer >= 3 && stateInfo.heldItem != null)
+        {
+            itemUseChance = Random.value;
+            chanceTimer = 0;
+        }
+
+        if (stateInfo.heldItem != null)
+        {
+            chanceTimer += Time.deltaTime;
+            Debug.Log(chanceTimer);
         }
     }
 }
