@@ -22,18 +22,24 @@ public class pauseGame : MonoBehaviour
             {
                 Pause();
             }
-            void Resume()
-            {
-                PausemenuUI.SetActive(false);
-                Time.timeScale = 1f;
-                GameIsPaused = false;
-            }
-            void Pause()
-            {
-                PausemenuUI.SetActive(true);
-                Time.timeScale = 0f; // freezes time in pause
-                GameIsPaused = true;
-            }
         }
     }
+    public void Resume()
+    {
+        PausemenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+    }
+
+    public void Pause()
+    {
+        PausemenuUI.SetActive(true);
+        Time.timeScale = 0f; // freezes time in pause
+        GameIsPaused = true;
+    }
 }
+
+
+
+        
+    
