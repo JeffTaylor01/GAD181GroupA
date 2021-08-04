@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 public class mainMenu : MonoBehaviour
 {
    
@@ -21,10 +20,11 @@ public class mainMenu : MonoBehaviour
             {
                 PauseGame();
             }
-            if (pausePanel.activeInHierarchy)
+            else if (pausePanel.activeInHierarchy)
             {
                 ContinueGame();
             }
+
         }
     }
     
