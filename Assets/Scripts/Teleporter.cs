@@ -6,15 +6,14 @@ public class Teleporter : MonoBehaviour
 {
     public Transform destination;
 
-    private void Start()
-    {
-        destination = transform.GetChild(0);
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals("Player"))
-        {            
+        {
+            other.transform.position = destination.position;
+            other.transform.rotation = destination.rotation;
+
             bool usePC = false;
 
             Vector3 exitVel = destination.forward;
@@ -35,9 +34,7 @@ public class Teleporter : MonoBehaviour
                 var pc = other.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
                 exitVel *= pc.velocity.magnitude;
                 pc.velocity = exitVel;
-            }
-            other.gameObject.transform.position = destination.position;
-            other.gameObject.transform.rotation = destination.rotation;
+            }            
         }
     }
 }

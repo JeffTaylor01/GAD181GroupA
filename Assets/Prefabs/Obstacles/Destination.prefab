@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6883832818638562799}
   - component: {fileID: 6883832818638562796}
   - component: {fileID: 6883832818638562797}
-  - component: {fileID: 6883832818638562798}
+  - component: {fileID: 8360488739934106579}
   m_Layer: 0
   m_Name: Destination
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6883832818638562792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 191.72604, y: 141.39012, z: 103.33186}
-  m_LocalScale: {x: 2.2, y: 4.142197, z: 2.2}
+  m_LocalScale: {x: 2.2, y: 4.2, z: 2.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8f241d4167ab91940bbbd5d7c7dcacc3, type: 2}
+  - {fileID: 2100000, guid: b2b767aa8005e7743b78b6ed492f5350, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,16 +83,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &6883832818638562798
-SphereCollider:
+--- !u!136 &8360488739934106579
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6883832818638562792}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

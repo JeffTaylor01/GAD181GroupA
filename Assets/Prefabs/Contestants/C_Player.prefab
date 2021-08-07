@@ -194,7 +194,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 40
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -226,7 +226,9 @@ MonoBehaviour:
   ignoreIT: 0
   shielded: 0
   heldItem: {fileID: 0}
+  itemInRange: 0
   itemUsed: 0
+  objectInRange: 0
 --- !u!114 &646667427042681033
 MonoBehaviour:
   m_ObjectHideFlags: 0

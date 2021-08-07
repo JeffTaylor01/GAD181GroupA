@@ -62,8 +62,10 @@ public class WanderState : State
             {
                 ItemLogic();
 
+                NavMeshPath path = new NavMeshPath();
+                agent.CalculatePath(destination, path);
                 //Debug.Log("Wandering");
-                if (Vector3.Distance(transform.parent.position, destination) < 10)
+                if (Vector3.Distance(transform.parent.position, destination) < 25 || path.status == NavMeshPathStatus.PathInvalid)
                 {
                     destination = newWayPoint(agent);
                 }

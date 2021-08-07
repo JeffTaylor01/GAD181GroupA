@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerCharacterController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerCharacterController : MonoBehaviour
 	public float jumpHeight = 2.0f;
 
 	private Rigidbody rigidbody;
+	private NavMeshAgent agent;
 	private bool grounded = false;
 
 	public float ver;
@@ -19,7 +21,9 @@ public class PlayerCharacterController : MonoBehaviour
 
 	private void Start()
 	{
+
 		rigidbody = GetComponent<Rigidbody>();
+		agent = GetComponent<NavMeshAgent>();
 		rigidbody.freezeRotation = true;
 		rigidbody.useGravity = false;
 	}
