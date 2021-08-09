@@ -11,7 +11,9 @@ public class UseEnvironmentObjectState : State
 
     private Vector3 destination;
     private bool reachedObject;
-    private float objectCooldown;
+    private float objectCooldown = 5;
+    private bool runCooldown = false;
+    private float cooldownTimer = 0;
 
     private void Start()
     {
@@ -23,6 +25,16 @@ public class UseEnvironmentObjectState : State
         destination = FindObject();
         if (stateInfo.objectInRange && !reachedObject)
         {
+            if (runCooldown)
+            {
+                cooldownTimer += Time.deltaTime;
+                if (cooldownTimer >= objectCooldown)
+                {
+                    stateInfo.agent.enabled = true;
+                    stateInfo.rb.isKinematic = true;
+                    runCooldown = false;
+                }
+            }
             agent.SetDestination(destination);
             return this;
         }
@@ -36,17 +48,12 @@ public class UseEnvironmentObjectState : State
     {
         if (collision.gameObject.tag.Equals("EnvironmentObject"))
         {
-            reachedObject = true;
+            if (collision.gameObject.GetComponent<BouncePad>() != null)
+            {
+                BouncePlayer(stateInfo.gameObject);
+            }            
         }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag.Equals("EnvironmentObject"))
-        {
-            reachedObject = false;
-        }
-    }
+    }    
 
     private Vector3 FindObject()
     {
@@ -67,5 +74,17 @@ public class UseEnvironmentObjectState : State
         }        
         Debug.Log(gameObject.name + ": Going to Object");
         return objectDest;
+    }
+
+    void BouncePlayer(GameObject bouncePad)
+    {
+        stateInfo.agent.enabled = false;
+        stateInfo.rb.isKinematic = false;
+        runCooldown = true;
+        cooldownTimer = 0;
+
+        Vector3 bounce = bouncePad.transform.up * bouncePad.GetComponent<BouncePad>().bounceAmount;
+
+        stateInfo.rb.AddForce(bounce, ForceMode.VelocityChange);
     }
 }

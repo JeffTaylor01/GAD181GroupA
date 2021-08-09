@@ -11,7 +11,8 @@ public class StateManager : MonoBehaviour
     public bool isPlayer;
 
     public State currentState;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
+    public Rigidbody rb;
 
     private float taggedCooldown = 2;
     private float cooldownTimer;
@@ -32,6 +33,7 @@ public class StateManager : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
         agentSpeed = agent.speed;
     }
     // Update is called once per frame

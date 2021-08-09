@@ -8,6 +8,7 @@ public class ContestantManager : MonoBehaviour
     public bool spawnAI;
     public bool includePlayer;
     public GameObject player;
+    public GameSettings settings;
 
     public bool hasCeaseFire;
     public float ceaseFire = 60;
@@ -31,13 +32,20 @@ public class ContestantManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var count = AIAmount;
+
+        if (settings != null)
+        {
+            count = PlayerPrefs.GetInt("AIAmount");
+        }
+
         if (spawnAI)
         {
             if (includePlayer)
             {
                 contestants.Add(player);                
             }
-            for (int i = 0; i < AIAmount; i++)
+            for (int i = 0; i < count; i++)
             {
                 var contestant = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x * i - 1, spawnSpacing.y, spawnSpacing.z * i - 1), Quaternion.identity) as GameObject;
                 contestant.name = "Pseudo" + (i + 1);

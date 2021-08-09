@@ -11,36 +11,15 @@ public class PlayerCameraControlelr : MonoBehaviour
     private float mouseX;
     private float mouseY;
 
-    private bool seeMouse = false;
-
     // Start is called before the first frame update
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        rotSpeed = PlayerPrefs.GetFloat("Sensitivity");        
     }
 
     // Update is called once per frame
     private void LateUpdate()
     {
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!seeMouse)
-            {
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                seeMouse = true;
-            }
-            else
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-                seeMouse = false;
-            }
-            
-        }
-
         CamControl();
     }
 
