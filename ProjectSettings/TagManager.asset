@@ -10,6 +10,7 @@ TagManager:
   - ItemSpawner
   - Shield
   - EnvironmentObject
+  - Surface
   layers:
   - Default
   - TransparentFX

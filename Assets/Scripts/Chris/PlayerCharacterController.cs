@@ -49,12 +49,15 @@ public class PlayerCharacterController : MonoBehaviour
 		grounded = false;
 	}
 
-    void OnCollisionStay()
-	{
-		grounded = true;
-	}
+    private void OnCollisionStay(Collision collision)
+    {
+		if (collision.collider.tag.Equals("Surface"))
+        {
+			grounded = true;
+        }
+    }
 
-	private Vector3 CalculateTargetVelocity()
+    private Vector3 CalculateTargetVelocity()
     {
 		Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		hor = Input.GetAxis("Horizontal");

@@ -216,7 +216,7 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: -0.13
+    x: 0.8
     y: 0
     width: 0.3
     height: 0.3
@@ -977,6 +977,14 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_TagString
+      value: Surface
+      objectReference: {fileID: 0}
     - target: {fileID: 5769543112669981908, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: stopTime
       value: 6
@@ -1133,6 +1141,14 @@ PrefabInstance:
     - target: {fileID: 2681861105185480737, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: m_Size.z
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_TagString
+      value: Surface
       objectReference: {fileID: 0}
     - target: {fileID: 5769543112669981908, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: stopTime
@@ -1450,7 +1466,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 586448880}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a00b8635ab8647344901ba2fcce444d7, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -2419,6 +2435,14 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -3214408144825957395, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -3214408144825957395, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
+      propertyPath: m_TagString
+      value: Surface
+      objectReference: {fileID: 0}
+    - target: {fileID: -3214408144825957395, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 40
       objectReference: {fileID: 0}
@@ -2457,6 +2481,14 @@ PrefabInstance:
     - target: {fileID: 1045811859733162144, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2292346112856024843, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2292346112856024843, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
+      propertyPath: m_TagString
+      value: Surface
       objectReference: {fileID: 0}
     - target: {fileID: 2292346112856024843, guid: 36e8a6b50d80c5d40b19942706226c61, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -2552,7 +2584,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1262410821}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a00b8635ab8647344901ba2fcce444d7, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -2784,7 +2816,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306226183}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a00b8635ab8647344901ba2fcce444d7, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -2961,6 +2993,14 @@ PrefabInstance:
     - target: {fileID: 2681861105185480737, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: m_Size.z
       value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_TagString
+      value: Surface
       objectReference: {fileID: 0}
     - target: {fileID: 5769543112669981908, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: stopTime
@@ -3414,9 +3454,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 565918352392250266, guid: abed111049e5f1e4493cb8970eb84c18, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 646667427042681033, guid: abed111049e5f1e4493cb8970eb84c18, type: 3}
       propertyPath: speed
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 646667427042681033, guid: abed111049e5f1e4493cb8970eb84c18, type: 3}
+      propertyPath: ground.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 646667427042681033, guid: abed111049e5f1e4493cb8970eb84c18, type: 3}
       propertyPath: maxVelocityChange
@@ -4344,6 +4392,14 @@ PrefabInstance:
     - target: {fileID: 2681861105185480737, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: m_Size.z
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4776452485230583291, guid: 40041d09d186d904d845157cdc847efd, type: 3}
+      propertyPath: m_TagString
+      value: Surface
       objectReference: {fileID: 0}
     - target: {fileID: 5769543112669981908, guid: 40041d09d186d904d845157cdc847efd, type: 3}
       propertyPath: stopTime

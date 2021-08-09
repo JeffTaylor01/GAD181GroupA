@@ -120,7 +120,7 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    public void gotTagged()
+    public void gotTagged(StateManager other)
     {
         if (!shielded)
         {
@@ -133,9 +133,9 @@ public class StateManager : MonoBehaviour
         }        
     }
 
-    public void taggedAnother()
+    public void taggedAnother(StateManager other)
     {
-        if (!shielded)
+        if (!other.shielded)
         {
             Debug.Log(gameObject.name + " taggedAnother");
             isIT = false;

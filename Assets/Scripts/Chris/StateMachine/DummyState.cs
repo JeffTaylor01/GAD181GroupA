@@ -88,8 +88,8 @@ public class DummyState : State
 
     private void tagged()
     {
-        stateInfo.taggedAnother();
-        target.GetComponent<StateManager>().gotTagged();
+        stateInfo.taggedAnother(target.GetComponent<StateManager>());
+        target.GetComponent<StateManager>().gotTagged(stateInfo);
         stateInfo.contestants.tagger = target;
     }
 
