@@ -20,11 +20,18 @@ public class Stun : MonoBehaviour
     public Transform targetPos;
     public Vector3 startPos;
     public float stunRadius = 8;
-    public float speed = 10;
-    public float arcHeight = 1;
     public float aimRange = 25;
 
+    public AnimationCurve arc;
+    private float throwTime = 0;
+    private float distance;
+
     private Collider[] collisions;
+
+    private void Awake()
+    {
+        targetPos.localScale = new Vector3(stunRadius * 2, stunRadius * 2, stunRadius * 2);
+    }
 
     private void CheckUser()
     {
@@ -40,7 +47,6 @@ public class Stun : MonoBehaviour
 
     public void UseItem()
     {
-        CheckUser();
         stateInfo = user.GetComponent<StateManager>();
         stateInfo.itemUsed = true;
         thrown = true;
@@ -115,10 +121,13 @@ public class Stun : MonoBehaviour
 
             if (aiming)
             {
+                Debug.Log("Player Aiming");
                 if (Physics.Raycast(ray, out hit))
                 {
                     if (Vector3.Distance(startPos, hit.point) <= aimRange)
                     {
+                        var vel = Vector3.zero;
+                        var pos = Vector3.SmoothDamp(targetPos.position, hit.point, ref vel, 1);
                         targetPos.position = hit.point;
                         targetPos.gameObject.GetComponent<MeshRenderer>().enabled = true;
                     }
@@ -126,7 +135,6 @@ public class Stun : MonoBehaviour
                     {
                         targetPos.gameObject.GetComponent<MeshRenderer>().enabled = false;
                     }
-
                 }
             }
             else
@@ -163,28 +171,13 @@ public class Stun : MonoBehaviour
         targetPos.parent = null;
         projectile.gameObject.transform.parent = null;
         projectile.GetComponent<MeshRenderer>().enabled = true;
-        float x0 = startPos.x;
-        float x1 = targetPos.position.x;
-        float xDist = x1 - x0;
-        float z0 = startPos.z;
-        float z1 = targetPos.position.z;
-        float zDist = z1 - z0;
 
-        float nextX = Mathf.MoveTowards(projectile.transform.position.x, x1, speed * Time.deltaTime);
-        float nextZ = Mathf.MoveTowards(projectile.transform.position.z, z1, speed * Time.deltaTime);
+        throwTime += Time.deltaTime;
+        Vector3 pos = Vector3.Lerp(startPos, targetPos.position, throwTime);
+        pos.y = arc.Evaluate(throwTime) * (Vector3.Distance(startPos, targetPos.transform.position) * .4f);
+        projectile.transform.position = pos;
 
-        float baseYX = Mathf.Lerp(startPos.y, targetPos.position.y, (nextX - x0) / xDist);
-        float baseYZ = Mathf.Lerp(startPos.y, targetPos.position.y, (nextZ - z0) / zDist);
-        float baseY = (baseYX + baseYZ) / 2;
-
-        float arcX = arcHeight * (nextX - x0) * (nextX - x1) / (-0.25f * xDist * xDist);
-        float arcZ = arcHeight * (nextZ - z0) * (nextZ - z1) / (-0.25f * zDist * zDist);
-        float arc= (arcX + arcZ) / 2;
-
-        var nextPos = new Vector3(nextX, baseY + arc, nextZ);
-        projectile.transform.position = nextPos;
-
-        if (nextPos == targetPos.position)
+        if (pos == targetPos.position)
         {
             thrown = false;
             Arrived();

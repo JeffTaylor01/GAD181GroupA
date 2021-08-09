@@ -1369,15 +1369,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnAI: 1
-  includePlayer: 0
+  includePlayer: 1
   player: {fileID: 523670074}
   hasCeaseFire: 1
-  ceaseFire: 2
+  ceaseFire: 10
   cfTimer: 0
-  hasElimination: 0
-  eliminationTime: 5
+  hasElimination: 1
+  runElimination: 0
+  eliminationTime: 20
   elimTimer: 0
-  AIAmount: 5
+  AIAmount: 20
   spawnSpacing: {x: 0, y: 0, z: 2}
   prefab: {fileID: 6957560175450877243, guid: f4f40d754d7285d4fbeadbe0c70e4d40, type: 3}
   contestants: []

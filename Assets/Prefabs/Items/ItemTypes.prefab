@@ -121,9 +121,40 @@ MonoBehaviour:
   targetPos: {fileID: 3690487763805852236}
   startPos: {x: 0, y: 0, z: 0}
   stunRadius: 8
-  speed: 10
-  arcHeight: 15
   aimRange: 25
+  arc:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0.005937911
+      outSlope: 0.005937911
+      tangentMode: 0
+      weightedMode: 3
+      inWeight: 0.50121653
+      outWeight: 0.5
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -2
+      outSlope: -2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3690487762238231140
 GameObject:
   m_ObjectHideFlags: 0
@@ -527,7 +558,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 762919d19c2489a4d809eeba43fb82bf, type: 2}
+  - {fileID: 2100000, guid: ea7fcfe3ed25765458a1daf480737197, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

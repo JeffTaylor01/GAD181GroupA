@@ -14,6 +14,7 @@ public class ContestantManager : MonoBehaviour
     public float cfTimer = 0;
 
     public bool hasElimination;
+    public bool runElimination;
     public float eliminationTime = 20;
     public float elimTimer = 0;
 
@@ -63,7 +64,14 @@ public class ContestantManager : MonoBehaviour
                 if (cfTimer >= ceaseFire)
                 {
                     SelectTagger();
-                    hasElimination = true;
+                    if (hasElimination)
+                    {
+                        runElimination = true;
+                    }
+                    else
+                    {
+                        runElimination = false;
+                    }
                 }
             }
         }
@@ -71,7 +79,7 @@ public class ContestantManager : MonoBehaviour
 
     private void Elimination()
     {
-        if (hasElimination)
+        if (runElimination)
         {
             if (contestants.Count > 1)
             {
@@ -114,7 +122,7 @@ public class ContestantManager : MonoBehaviour
             winner = contestants[0];
             winner.GetComponent<StateManager>().isIT = false;
             tagger = null;
-            hasElimination = false;
+            runElimination = false;
         }
     }
 }
