@@ -74,10 +74,10 @@ public class ChaseState : State
 
     private GameObject[] getTargets()
     {
-        GameObject[] pseudos = stateInfo.contestants.contestants;
-        var targs = new GameObject[pseudos.Length - 1];
+        var pseudos = stateInfo.contestants.contestants;
+        var targs = new GameObject[pseudos.Count - 1];
         int targetIndex = 0;
-        for (int i = 0; i < pseudos.Length; i++)
+        for (int i = 0; i < pseudos.Count; i++)
         {
             if (pseudos[i] != gameObject.transform.parent.gameObject)
             {

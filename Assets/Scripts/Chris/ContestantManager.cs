@@ -11,16 +11,21 @@ public class ContestantManager : MonoBehaviour
 
     public bool hasCeaseFire;
     public float ceaseFire = 60;
-    public float timer = 0;
+    public float cfTimer = 0;
+
+    public bool hasElimination;
+    public float eliminationTime = 20;
+    public float elimTimer = 0;
 
     public int AIAmount = 5;
     public Vector3 spawnSpacing;
     public GameObject prefab;
-    public GameObject[] contestants;
+    public List<GameObject> contestants;
 
     public GameObject tagger;
     private bool selectIT = true;
-
+    private bool hasWinner;
+    private GameObject winner;
 
     // Start is called before the first frame update
     void Start()
@@ -29,51 +34,87 @@ public class ContestantManager : MonoBehaviour
         {
             if (includePlayer)
             {
-                contestants = new GameObject[AIAmount + 1];
-                contestants[0] = player;
-                for (int i = 1; i < contestants.Length; i++)
-                {
-                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x*i-1, spawnSpacing.y, spawnSpacing.z * i-1), Quaternion.identity) as GameObject;
-                    contestants[i].name = "Pseudo" + (i + 1);
-                }
+                contestants.Add(player);                
             }
-            else
+            for (int i = 0; i < AIAmount; i++)
             {
-                contestants = new GameObject[AIAmount];
-                for (int i = 0; i < contestants.Length; i++)
-                {
-                    contestants[i] = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x * i, spawnSpacing.y, spawnSpacing.z * i), Quaternion.identity) as GameObject;
-                    contestants[i].name = "Pseudo" + (i + 1);
-                }
+                var contestant = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x * i - 1, spawnSpacing.y, spawnSpacing.z * i - 1), Quaternion.identity) as GameObject;
+                contestant.name = "Pseudo" + (i + 1);
+                contestants.Add(contestant);
             }
-            
-            
-        }
-        
+        }        
     }
 
     // Update is called once per frame
     void Update()
     {
+        CeaseFire();
+        Winner();
+        Elimination();
+    }
+
+    private void CeaseFire()
+    {
         if (hasCeaseFire)
         {
-            if (timer < ceaseFire && selectIT == true)
+            if (cfTimer < ceaseFire)
             {
-                timer += Time.deltaTime;
-                if (timer >= ceaseFire)
+                cfTimer += Time.deltaTime;
+                if (cfTimer >= ceaseFire)
                 {
-                    int selected = Random.Range(0, contestants.Length - 1);
-
-                    tagger = contestants[selected];
-                    Debug.Log("IT is" + tagger.name);
-
-                    tagger.GetComponent<StateManager>().isIT = true;
-                    selectIT = false;
+                    SelectTagger();
+                    hasElimination = true;
                 }
             }
         }
-        
     }
 
+    private void Elimination()
+    {
+        if (hasElimination)
+        {
+            if (contestants.Count > 1)
+            {
+                elimTimer += Time.deltaTime;
+                if (elimTimer >= eliminationTime)
+                {
+                    contestants.Remove(tagger);
+                    Destroy(tagger);
+                    selectIT = true;
+                    SelectTagger();
+                    elimTimer = 0;
+                }
+            }            
+        }
+    }
 
+    private void SelectTagger()
+    {
+        if (selectIT && !hasWinner)
+        {
+            int selected = Random.Range(0, contestants.Count);
+
+            tagger = contestants[selected];
+            Debug.Log("IT is" + tagger.name);
+
+            tagger.GetComponent<StateManager>().isIT = true;
+            selectIT = false;
+        }        
+    }
+
+    private void Winner()
+    {
+        if (contestants.Count > 1)
+        {
+            hasWinner = false;
+        }
+        else if (contestants.Count == 1)
+        {
+            hasWinner = true;
+            winner = contestants[0];
+            winner.GetComponent<StateManager>().isIT = false;
+            tagger = null;
+            hasElimination = false;
+        }
+    }
 }
