@@ -140,6 +140,7 @@ public class StateManager : MonoBehaviour
             Debug.Log(gameObject.name + " taggedAnother");
             isIT = false;
             ignoreIT = true;
+            contestants.ResetTimer();
         }        
     }    
 }

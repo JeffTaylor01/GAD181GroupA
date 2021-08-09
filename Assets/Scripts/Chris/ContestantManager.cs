@@ -125,4 +125,8 @@ public class ContestantManager : MonoBehaviour
             runElimination = false;
         }
     }
+    public void ResetTimer()
+    {
+        elimTimer = 0;
+    }
 }
