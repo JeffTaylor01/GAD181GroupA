@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class SpeedBoost : MonoBehaviour
 {
-    public float boost = 25;
+    public float boostMultiplier = 25;
     public float boostTime;
 
     public bool runBoost;
@@ -30,13 +30,13 @@ public class SpeedBoost : MonoBehaviour
         {
             var pc = user.GetComponent<PlayerCharacterController>();
             playerSpeed = pc.speed;
-            pc.speed = boost;
+            pc.speed *= boostMultiplier;
         }
         else
         {
             var pc = user.GetComponent<NavMeshAgent>();
             playerSpeed = pc.speed;
-            pc.speed = boost;
+            pc.speed *= boostMultiplier;
         }
         
 

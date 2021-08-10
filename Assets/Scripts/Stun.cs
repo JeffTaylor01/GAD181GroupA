@@ -70,12 +70,12 @@ public class Stun : MonoBehaviour
                 if (usePC)
                 {
                     var pc = collisions[i].GetComponent<PlayerCharacterController>();
-                    pc.speed = 10;
+                    pc.speed = 35;
                 }
                 else
                 {
                     var pc = collisions[i].GetComponent<NavMeshAgent>();
-                    pc.speed = 25;
+                    pc.speed = 40;
                 }
             }
         }
@@ -177,7 +177,9 @@ public class Stun : MonoBehaviour
         pos.y = arc.Evaluate(throwTime) * (Vector3.Distance(startPos, targetPos.transform.position) * .4f);
         projectile.transform.position = pos;
 
-        if (pos == targetPos.position)
+        throwTime += Time.deltaTime;
+
+        if (throwTime >= 1)
         {
             thrown = false;
             Arrived();

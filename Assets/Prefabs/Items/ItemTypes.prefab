@@ -128,26 +128,26 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 1.9999471
+      outSlope: 1.9999471
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5
+      time: 0.50001323
       value: 1
-      inSlope: 0.005937911
-      outSlope: 0.005937911
-      tangentMode: 0
-      weightedMode: 3
-      inWeight: 0.50121653
-      outWeight: 0.5
+      inSlope: -0.000052928925
+      outSlope: -0.000052928925
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: -2
-      outSlope: -2
+      inSlope: -2.000053
+      outSlope: -2.000053
       tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
@@ -297,7 +297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 663011c45aafa15409fd0e992ec58869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boost: 25
+  boostMultiplier: 1.3
   boostTime: 3
   runBoost: 0
   timer: 0
