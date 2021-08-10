@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ContestantManager : MonoBehaviour
 {
@@ -28,10 +29,21 @@ public class ContestantManager : MonoBehaviour
     private bool selectIT = true;
     private bool hasWinner;
     private GameObject winner;
+    public GameObject winText;
+
+    public AudioSource bgm;
+    public AudioSource win;
+    public AudioSource lose;
+    public AudioSource tag;
+    public AudioSource ow;
 
     // Start is called before the first frame update
     void Start()
     {
+        winText.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+
         var count = AIAmount;
 
         if (settings != null)
@@ -57,9 +69,12 @@ public class ContestantManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CeaseFire();
-        Winner();
-        Elimination();
+        if (player != null)
+        {
+            CeaseFire();
+            Winner();
+            Elimination();            
+        }
     }
 
     private void CeaseFire()
@@ -97,6 +112,24 @@ public class ContestantManager : MonoBehaviour
                     contestants.Remove(tagger);
                     Destroy(tagger);
                     selectIT = true;
+                    if (contestants.Count == 1 && contestants[0].name == "C_Player")
+                    {
+                        bgm.Stop();
+                        winText.SetActive(true);
+                        win.Play();
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        Time.timeScale = 0;
+                    }
+                    else if (contestants.Count == 1 && contestants[0].name != "C_Player")
+                    {
+                        bgm.Stop();
+                        lose.Play();
+                        elimTimer = 20;
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        Time.timeScale = 0;
+                    }
                     SelectTagger();
                     elimTimer = 0;
                 }

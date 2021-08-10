@@ -12,7 +12,7 @@ public class FleeState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Material fleeColor;
+    public Color fleeColor;
 
     public float itemUseChance;
     private float chanceTimer = 0;
@@ -35,7 +35,7 @@ public class FleeState : State
         {
             if (checkMaterial())
             {
-                GetComponentInParent<MeshRenderer>().material = fleeColor;
+                GetComponentInParent<MeshRenderer>().material.color = fleeColor;
             }
 
             if (stateInfo.heldItem != null)
@@ -136,7 +136,7 @@ public class FleeState : State
 
     private bool checkMaterial()
     {
-        if (GetComponentInParent<MeshRenderer>().material != fleeColor)
+        if (GetComponentInParent<MeshRenderer>().material.color != fleeColor)
         {
             return true;
         }

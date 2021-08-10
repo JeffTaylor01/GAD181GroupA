@@ -47,7 +47,6 @@ public class StateManager : MonoBehaviour
             {
                 runTagCooldown = false;
                 canTag = true;
-                agent.speed = agentSpeed;
             }
         }
         else
@@ -71,6 +70,7 @@ public class StateManager : MonoBehaviour
             }
             else
             {
+                agent.speed = agentSpeed;
                 currentState.isIT = false;
                 canTag = false;
             }
@@ -128,6 +128,10 @@ public class StateManager : MonoBehaviour
         {
             Debug.Log(gameObject.name + " gotTagged");
             isIT = true;
+            if (gameObject.name == "C_Player")
+            {
+                contestants.ow.Play();
+            }
             runTagCooldown = true;
             agent.speed = 0;
             cooldownTimer = 0;
@@ -142,6 +146,10 @@ public class StateManager : MonoBehaviour
             Debug.Log(gameObject.name + " taggedAnother");
             isIT = false;
             ignoreIT = true;
+            if (gameObject.name == "C_Player")
+            {
+                contestants.tag.Play();
+            }            
             contestants.ResetTimer();
         }        
     }    

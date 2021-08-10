@@ -18,7 +18,7 @@ public class WanderState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Material wanderColor;
+    public Color wanderColor;
 
     public float itemUseChance;
     private float itemCTimer = 0;
@@ -44,7 +44,7 @@ public class WanderState : State
         {
             if (checkMaterial())
             {
-                GetComponentInParent<MeshRenderer>().material = wanderColor;
+                GetComponentInParent<MeshRenderer>().material.color = wanderColor;
             }
             if (stateInfo.heldItem == null && stateInfo.itemInRange)
             {
@@ -106,7 +106,7 @@ public class WanderState : State
 
     private bool checkMaterial()
     {
-        if (GetComponentInParent<MeshRenderer>().material != wanderColor)
+        if (GetComponentInParent<MeshRenderer>().material.color != wanderColor)
         {
             return true;
         }

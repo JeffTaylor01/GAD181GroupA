@@ -1,5 +1,117 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &974170045680171336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 485085610103242036}
+  - component: {fileID: 8747804889704683950}
+  - component: {fileID: 6617083639206145553}
+  - component: {fileID: 1824918503093853080}
+  - component: {fileID: 72753951797543604}
+  m_Layer: 0
+  m_Name: MapBlip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &485085610103242036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974170045680171336}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 475, z: 0}
+  m_LocalScale: {x: 15, y: 0.01, z: 15}
+  m_Children: []
+  m_Father: {fileID: 6957560175450877245}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8747804889704683950
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974170045680171336}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &6617083639206145553
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974170045680171336}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &1824918503093853080
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974170045680171336}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &72753951797543604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974170045680171336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f5fce86a007aa440bf505cc7c9bb44a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  yLevel: 475
+  player: {fileID: 6957560175450877247}
 --- !u!1 &2820417133294512675
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +250,7 @@ MonoBehaviour:
   chaseState: {fileID: 6957560175534124033}
   itDistanceRun: 10
   objectState: {fileID: 0}
-  fleeColor: {fileID: 2100000, guid: c74204a7fe4f57048be1aa595c981606, type: 2}
+  fleeColor: {r: 0.18431373, g: 0, b: 0.5471698, a: 1}
   itemUseChance: 0
 --- !u!1 &6957560175050119323
 GameObject:
@@ -289,7 +401,7 @@ MonoBehaviour:
   zMax: 450
   zMin: -450
   destination: {x: 0, y: 0, z: 0}
-  wanderColor: {fileID: 2100000, guid: 85998a8c395f680408adc7903e200f97, type: 2}
+  wanderColor: {r: 0.486359, g: 1, b: 0, a: 1}
   itemUseChance: 0
   objectUseChance: 0
   objectCRun: 0
@@ -332,6 +444,7 @@ Transform:
   - {fileID: 6957560174329899403}
   - {fileID: 3276967096338806440}
   - {fileID: 118122551458078002}
+  - {fileID: 485085610103242036}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -510,6 +623,6 @@ MonoBehaviour:
   itemState: {fileID: 5428366482651146890}
   targets: []
   target: {fileID: 0}
-  taggerColor: {fileID: 2100000, guid: 02ebbbd988a3522458e2248fa670155e, type: 2}
+  taggerColor: {r: 1, g: 0, b: 0, a: 1}
   distance: 0
   itemUseChance: 0

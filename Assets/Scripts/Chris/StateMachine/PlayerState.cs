@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class PlayerState : State
 {
     private StateManager stateInfo;
-    public Material playerColor;
-    public Material taggerColor;
+    public Color playerColor;
+    public Color taggerColor;
 
     private bool gotTargets;
     public GameObject[] targets;
@@ -26,7 +26,7 @@ public class PlayerState : State
         if (isIT)
         {
             Debug.Log("Player is IT");
-            GetComponentInParent<MeshRenderer>().material = taggerColor;
+            GetComponentInParent<MeshRenderer>().material.color = taggerColor;
 
             if (!gotTargets)
             {
@@ -47,7 +47,7 @@ public class PlayerState : State
         }
         else if (checkMaterial())
         {
-            GetComponentInParent<MeshRenderer>().material = playerColor;
+            GetComponentInParent<MeshRenderer>().material.color = playerColor;
         }
         
         return this;
@@ -158,7 +158,7 @@ public class PlayerState : State
 
     private bool checkMaterial()
     {
-        if (GetComponentInParent<MeshRenderer>().material != playerColor)
+        if (GetComponentInParent<MeshRenderer>().material.color != playerColor)
         {
             return true;
         }
