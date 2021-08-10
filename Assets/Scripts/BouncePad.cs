@@ -8,42 +8,47 @@ public class BouncePad : MonoBehaviour
 
     public float bounceAmount = 10;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collision)
     {
+        Debug.Log("AI on bouncepad");
         if (collision.gameObject.tag.Equals("Player"))
         {
-            BouncePlayer(collision.gameObject);
+            BouncePlayer(collision);
         }        
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.tag.Equals("Player"))
-        {
-            BouncePlayer(collision.gameObject);
-        }
+        //if (collision.gameObject.tag.Equals("Player"))
+        //{
+            BouncePlayer(collision);
+        //}
     }
 
-    void BouncePlayer(GameObject player)
+    void BouncePlayer(Collider player)
     {
         bool usePC = false;
 
+        
+
         Vector3 bounce = gameObject.transform.up * bounceAmount;
 
-        if (player.GetComponent<PlayerCharacterController>() != null)
+        if (player.gameObject.GetComponent<PlayerCharacterController>() != null)
         {
             usePC = true;
         }
 
         if (usePC)
         {
-            var pc = player.GetComponent<Rigidbody>();
+            var pc = player.gameObject.GetComponent<Rigidbody>();
             pc.AddForce(bounce, ForceMode.VelocityChange);
         }
         else
         {
-            var pc = player.GetComponent<Rigidbody>();
-            pc.AddForce(bounce, ForceMode.VelocityChange);
+            var pc = player.gameObject.GetComponent<NavMeshAgent>();
+            pc.enabled = false;
+            var pa = player.gameObject.GetComponent<Rigidbody>();
+            pa.AddForce(bounce, ForceMode.VelocityChange);
         }
     }
 }
