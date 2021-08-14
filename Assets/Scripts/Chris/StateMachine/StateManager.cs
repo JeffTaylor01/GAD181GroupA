@@ -18,7 +18,7 @@ public class StateManager : MonoBehaviour
     private float cooldownTimer;
     private bool runTagCooldown;
     public bool canTag;
-    private float agentSpeed;
+    public float agentSpeed;
 
     public bool ignoreIT;
     private float ignoreTime = 2;
@@ -29,12 +29,17 @@ public class StateManager : MonoBehaviour
     public bool itemInRange;
     public bool itemUsed;
     public bool objectInRange;
+    public bool stunned;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        agentSpeed = agent.speed;
+
+        if (contestants == null)
+        {
+            contestants = GameObject.FindGameObjectWithTag("GameController").GetComponent<ContestantManager>();
+        }
     }
     // Update is called once per frame
     private void Update()
@@ -45,6 +50,7 @@ public class StateManager : MonoBehaviour
             cooldownTimer += Time.deltaTime;
             if (cooldownTimer >= taggedCooldown)
             {
+                agent.speed = agentSpeed;
                 runTagCooldown = false;
                 canTag = true;
             }
@@ -59,10 +65,7 @@ public class StateManager : MonoBehaviour
                     ignoreIT = false;
                 }
             }
-            if (contestants == null)
-            {
-                contestants = GameObject.FindGameObjectWithTag("GameController").GetComponent<ContestantManager>();
-            }
+            
             if (isIT)
             {
                 currentState.isIT = true;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Teleporter : MonoBehaviour
 {
@@ -28,13 +29,22 @@ public class Teleporter : MonoBehaviour
                 var pc = other.gameObject.GetComponent<Rigidbody>();
                 exitVel *= pc.velocity.magnitude;
                 pc.velocity = exitVel;
-            }
+            }            
             else
             {
-                var pc = other.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-                exitVel *= pc.velocity.magnitude;
-                pc.velocity = exitVel;
+                other.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+                StartCoroutine(NavDisableTimer(other.gameObject.GetComponent<NavMeshAgent>()));
+            //    var pc = other.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
+            //    exitVel *= pc.velocity.magnitude;
+            //    pc.velocity = exitVel;
             }            
         }
+    }
+
+    IEnumerator NavDisableTimer(NavMeshAgent agent)
+    {
+        yield return null;
+        yield return null;
+        agent.enabled = true;
     }
 }

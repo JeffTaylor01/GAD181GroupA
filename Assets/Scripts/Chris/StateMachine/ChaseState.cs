@@ -46,15 +46,12 @@ public class ChaseState : State
             ItemLogic();
 
             //isIT = true;
-            if (!gotTargets)
-            {
-                targets = getTargets();
-            }
+            targets = getTargets();
 
             findClosest();
-            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1.1) && stateInfo.canTag)
+            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 2) && stateInfo.canTag)
             {
-                Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
+                //Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
                 if (!target.GetComponent<StateManager>().shielded)
                 {
                     tagged();

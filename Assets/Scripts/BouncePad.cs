@@ -8,21 +8,38 @@ public class BouncePad : MonoBehaviour
 
     public float bounceAmount = 10;
 
-    private void OnTriggerEnter(Collider collision)
+    //private void OnTriggerEnter(Collider collision)
+    //{
+    //    Debug.Log("AI on bouncepad");
+    //    if (collision.gameObject.tag.Equals("Player"))
+    //    {
+    //        BouncePlayer(collision);
+    //    }        
+    //}
+
+    //private void OnTriggerStay(Collider collision)
+    //{
+    //    //if (collision.gameObject.tag.Equals("Player"))
+    //    //{
+    //        BouncePlayer(collision);
+    //    //}
+    //}
+
+    private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("AI on bouncepad");
         if (collision.gameObject.tag.Equals("Player"))
         {
-            BouncePlayer(collision);
-        }        
+            BouncePlayer(collision.collider);
+        }
     }
 
-    private void OnTriggerStay(Collider collision)
+    private void OnCollisionStay(Collision collision)
     {
-        //if (collision.gameObject.tag.Equals("Player"))
-        //{
-            BouncePlayer(collision);
-        //}
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            BouncePlayer(collision.collider);
+        }
     }
 
     void BouncePlayer(Collider player)

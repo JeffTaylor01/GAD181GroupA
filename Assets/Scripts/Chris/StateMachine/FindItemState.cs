@@ -19,7 +19,7 @@ public class FindItemState : State
     public override State RunCurrentState(NavMeshAgent agent)
     {
         destination = FindItem();
-        if (stateInfo.heldItem == null)
+        if (stateInfo.heldItem == null && stateInfo.itemInRange)
         {
             agent.SetDestination(destination);
             return this;

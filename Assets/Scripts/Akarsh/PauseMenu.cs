@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
    
     [SerializeField] private GameObject pausePanel;
     public PlayerCameraControlelr camera;
-    private bool seeMouse = false;
+    public bool canPause;
 
     void Start()
     {
@@ -19,15 +19,17 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!pausePanel.activeInHierarchy)
+            if (canPause)
             {
-                PauseGame();
+                if (!pausePanel.activeInHierarchy)
+                {
+                    PauseGame();
+                }
+                else if (pausePanel.activeInHierarchy)
+                {
+                    ContinueGame();
+                }
             }
-            else if (pausePanel.activeInHierarchy)
-            {
-                ContinueGame();
-            }
-
         }
     }
     

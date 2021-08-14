@@ -7,6 +7,7 @@ public class MovingPlatform : MonoBehaviour
     public List<Transform> waypoints;
     public float moveSpeed = 2;
     public int target;
+    public float heightOffset;
     public float maxDistance = 0;
     public float distance;
 
@@ -65,6 +66,7 @@ public class MovingPlatform : MonoBehaviour
         {
             if (collision.gameObject.GetComponent<PlayerCharacterController>() != null)
             {
+                if (collision.gameObject.transform.position.y > (gameObject.transform.position.y + heightOffset))
                 collision.gameObject.transform.parent = gameObject.transform;
             }            
         }

@@ -11,6 +11,7 @@ TagManager:
   - Shield
   - EnvironmentObject
   - Surface
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

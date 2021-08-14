@@ -60,6 +60,7 @@ public class Stun : MonoBehaviour
         {
             if (collisions[i].gameObject.tag.Equals("Player"))
             {
+                collisions[i].gameObject.GetComponent<StateManager>().stunned = false;
                 bool usePC = false;
 
                 if (collisions[i].GetComponent<PlayerCharacterController>() != null)
@@ -194,6 +195,7 @@ public class Stun : MonoBehaviour
         {
             if (collisions[i].gameObject.tag.Equals("Player"))
             {
+                collisions[i].gameObject.GetComponent<StateManager>().stunned = true;
                 bool usePC = false;
 
                 if (collisions[i].GetComponent<PlayerCharacterController>() != null)

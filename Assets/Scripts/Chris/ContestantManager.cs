@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.AI;
 
 public class ContestantManager : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class ContestantManager : MonoBehaviour
     public float elimTimer = 0;
 
     public int AIAmount = 5;
+    public bool spawnRandom;
+    public float randomRadius;
     public Vector3 spawnSpacing;
     public GameObject prefab;
     public List<GameObject> contestants;
@@ -30,6 +33,7 @@ public class ContestantManager : MonoBehaviour
     private bool hasWinner;
     private GameObject winner;
     public GameObject winText;
+    public GameObject loseScreen;
 
     public AudioSource bgm;
     public AudioSource win;
@@ -40,15 +44,23 @@ public class ContestantManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        winText.SetActive(false);
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        if (loseScreen != null)
+        {
+            loseScreen.SetActive(false);
+        }
+        if (winText != null)
+        {
+            winText.SetActive(false);
+        }        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         var count = AIAmount;
 
         if (settings != null)
         {
             count = PlayerPrefs.GetInt("AIAmount");
+            AIAmount = PlayerPrefs.GetInt("AIAmount");
         }
 
         if (spawnAI)
@@ -59,7 +71,23 @@ public class ContestantManager : MonoBehaviour
             }
             for (int i = 0; i < count; i++)
             {
-                var contestant = Instantiate(prefab, gameObject.transform.position + new Vector3(spawnSpacing.x * i - 1, spawnSpacing.y, spawnSpacing.z * i - 1), Quaternion.identity) as GameObject;
+                Vector3 finalPosition;
+                if (spawnRandom)
+                {
+                    Vector3 randomDirection = Random.insideUnitSphere * randomRadius;
+                    randomDirection += transform.position;
+                    NavMeshHit hit;
+                    NavMesh.SamplePosition(randomDirection, out hit, randomRadius, 1);
+                    finalPosition = hit.position;
+                    finalPosition.y += 1;
+                }
+                else
+                {
+                    finalPosition = gameObject.transform.position;
+                    finalPosition += spawnSpacing * i;
+                }
+
+                var contestant = Instantiate(prefab, finalPosition, Quaternion.identity) as GameObject;
                 contestant.name = "Pseudo" + (i + 1);
                 contestants.Add(contestant);
             }
@@ -112,8 +140,9 @@ public class ContestantManager : MonoBehaviour
                     contestants.Remove(tagger);
                     Destroy(tagger);
                     selectIT = true;
-                    if (contestants.Count == 1 && contestants[0].name == "C_Player")
+                    if (contestants.Count == 1 && contestants.Contains(player))
                     {
+                        hasWinner = true;
                         bgm.Stop();
                         winText.SetActive(true);
                         win.Play();
@@ -121,11 +150,15 @@ public class ContestantManager : MonoBehaviour
                         Cursor.lockState = CursorLockMode.None;
                         Time.timeScale = 0;
                     }
-                    else if (contestants.Count == 1 && contestants[0].name != "C_Player")
+                    else if (!contestants.Contains(player))
                     {
+                        hasWinner = true;
+                        loseScreen.SetActive(true);
+                        var pause = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenu>();
+                        pause.canPause = false;
                         bgm.Stop();
                         lose.Play();
-                        elimTimer = 20;
+                        elimTimer = 20;                        
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
                         Time.timeScale = 0;
