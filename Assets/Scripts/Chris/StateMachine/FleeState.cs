@@ -12,7 +12,6 @@ public class FleeState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Color fleeColor;
 
     public float itemUseChance;
     private float chanceTimer = 0;
@@ -33,11 +32,6 @@ public class FleeState : State
         }
         else
         {
-            if (checkMaterial())
-            {
-                GetComponentInParent<MeshRenderer>().material.color = fleeColor;
-            }
-
             if (stateInfo.heldItem != null)
             {
                 bool useItem = false;
@@ -125,18 +119,6 @@ public class FleeState : State
     private bool canSeeIT()
     {
         if (Vector3.Distance(transform.parent.position, tagger.transform.position) <= itDistanceRun)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private bool checkMaterial()
-    {
-        if (GetComponentInParent<MeshRenderer>().material.color != fleeColor)
         {
             return true;
         }

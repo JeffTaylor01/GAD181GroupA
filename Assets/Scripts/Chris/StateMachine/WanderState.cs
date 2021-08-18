@@ -18,7 +18,6 @@ public class WanderState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Color wanderColor;
 
     public float itemUseChance;
     private float itemCTimer = 0;
@@ -42,15 +41,11 @@ public class WanderState : State
         }
         else
         {
-            if (checkMaterial())
-            {
-                GetComponentInParent<MeshRenderer>().material.color = wanderColor;
-            }
             if (stateInfo.heldItem == null && stateInfo.itemInRange)
             {
                 return itemState;
             }
-            if (stateInfo.objectInRange && objectUseChance < 0.5)
+            if (stateInfo.objectInRange && objectUseChance < 0.9)
             {
                 return objectState;
             }
@@ -95,18 +90,6 @@ public class WanderState : State
     private bool canSeeIT()
     {
         if (Vector3.Distance(transform.position, tagger.transform.position) <= 10)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private bool checkMaterial()
-    {
-        if (GetComponentInParent<MeshRenderer>().material.color != wanderColor)
         {
             return true;
         }
@@ -213,6 +196,6 @@ public class WanderState : State
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(destination, 1f);
+        Gizmos.DrawSphere(destination, .1f);
     }
 }

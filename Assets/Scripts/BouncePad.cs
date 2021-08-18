@@ -7,23 +7,7 @@ public class BouncePad : MonoBehaviour
 {
 
     public float bounceAmount = 10;
-
-    //private void OnTriggerEnter(Collider collision)
-    //{
-    //    Debug.Log("AI on bouncepad");
-    //    if (collision.gameObject.tag.Equals("Player"))
-    //    {
-    //        BouncePlayer(collision);
-    //    }        
-    //}
-
-    //private void OnTriggerStay(Collider collision)
-    //{
-    //    //if (collision.gameObject.tag.Equals("Player"))
-    //    //{
-    //        BouncePlayer(collision);
-    //    //}
-    //}
+    public Transform targetDirection;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -44,11 +28,9 @@ public class BouncePad : MonoBehaviour
 
     void BouncePlayer(Collider player)
     {
-        bool usePC = false;
+        bool usePC = false;        
 
-        
-
-        Vector3 bounce = gameObject.transform.up * bounceAmount;
+        Vector3 bounce = (targetDirection.position - transform.position).normalized * bounceAmount;
 
         if (player.gameObject.GetComponent<PlayerCharacterController>() != null)
         {
@@ -58,14 +40,19 @@ public class BouncePad : MonoBehaviour
         if (usePC)
         {
             var pc = player.gameObject.GetComponent<Rigidbody>();
-            pc.AddForce(bounce, ForceMode.VelocityChange);
+            pc.velocity = bounce;
         }
         else
         {
             var pc = player.gameObject.GetComponent<NavMeshAgent>();
             pc.enabled = false;
             var pa = player.gameObject.GetComponent<Rigidbody>();
-            pa.AddForce(bounce, ForceMode.VelocityChange);
+            pa.velocity = bounce;
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, targetDirection.position);
     }
 }

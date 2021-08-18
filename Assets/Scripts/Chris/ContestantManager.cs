@@ -136,9 +136,7 @@ public class ContestantManager : MonoBehaviour
             {
                 elimTimer += Time.deltaTime;
                 if (elimTimer >= eliminationTime)
-                {
-                    contestants.Remove(tagger);
-                    Destroy(tagger);
+                {                    
                     selectIT = true;
                     if (contestants.Count == 1 && contestants.Contains(player))
                     {
@@ -150,7 +148,7 @@ public class ContestantManager : MonoBehaviour
                         Cursor.lockState = CursorLockMode.None;
                         Time.timeScale = 0;
                     }
-                    else if (!contestants.Contains(player))
+                    else if (!contestants.Contains(player) && includePlayer)
                     {
                         hasWinner = true;
                         loseScreen.SetActive(true);
@@ -163,6 +161,8 @@ public class ContestantManager : MonoBehaviour
                         Cursor.lockState = CursorLockMode.None;
                         Time.timeScale = 0;
                     }
+                    contestants.Remove(tagger);
+                    Destroy(tagger);
                     SelectTagger();
                     elimTimer = 0;
                 }

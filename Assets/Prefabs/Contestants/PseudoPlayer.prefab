@@ -250,7 +250,6 @@ MonoBehaviour:
   chaseState: {fileID: 6957560175534124033}
   itDistanceRun: 10
   objectState: {fileID: 0}
-  fleeColor: {r: 0.18431373, g: 0, b: 0.5471698, a: 1}
   itemUseChance: 0
 --- !u!1 &6957560175050119323
 GameObject:
@@ -401,7 +400,6 @@ MonoBehaviour:
   zMax: 450
   zMin: -450
   destination: {x: 0, y: 0, z: 0}
-  wanderColor: {r: 0.486359, g: 1, b: 0, a: 1}
   itemUseChance: 0
   objectUseChance: 0
   objectCRun: 0
@@ -565,6 +563,9 @@ MonoBehaviour:
   contestants: {fileID: 0}
   isIT: 0
   isPlayer: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
+  wanderColor: {r: 0.5882353, g: 1, b: 0, a: 1}
+  itColor: {r: 1, g: 0, b: 0, a: 1}
   currentState: {fileID: 6957560175534124033}
   agent: {fileID: 0}
   rb: {fileID: 0}
@@ -625,6 +626,5 @@ MonoBehaviour:
   itemState: {fileID: 5428366482651146890}
   targets: []
   target: {fileID: 0}
-  taggerColor: {r: 1, g: 0, b: 0, a: 1}
   distance: 0
   itemUseChance: 0

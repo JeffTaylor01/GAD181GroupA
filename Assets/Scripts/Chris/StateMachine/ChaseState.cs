@@ -14,13 +14,12 @@ public class ChaseState : State
 
     private StateManager stateInfo;
     private GameObject tagger;
-    public Color taggerColor;
     private bool gotTargets;
 
     public float distance;
 
     public float itemUseChance;
-    private float itemCTimer = 0;    
+    private float itemCTimer = 0;
 
     private void Start()
     {
@@ -37,12 +36,6 @@ public class ChaseState : State
 
         if (isIT)
         {
-            //Debug.Log("Chasing");
-            if (checkMaterial())
-            {
-                GetComponentInParent<MeshRenderer>().material.color = taggerColor;
-            }
-
             ItemLogic();
 
             //isIT = true;
@@ -105,18 +98,6 @@ public class ChaseState : State
         stateInfo.taggedAnother(target.GetComponent<StateManager>());
         target.GetComponent<StateManager>().gotTagged(stateInfo);
         stateInfo.contestants.tagger = target;
-    }
-
-    private bool checkMaterial()
-    {
-        if (GetComponentInParent<MeshRenderer>().material.color != taggerColor)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     private void ItemLogic()

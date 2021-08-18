@@ -20,27 +20,17 @@ public class UseEnvironmentObjectState : State
         stateInfo = GetComponentInParent<StateManager>();
     }
 
-    public override State RunCurrentState(NavMeshAgent agent)
+    private void Update()
     {
-        destination = FindObject();
-        if (stateInfo.objectInRange && !reachedObject)
+        if (runCooldown)
         {
-            if (runCooldown)
+            cooldownTimer += Time.deltaTime;
+            if (cooldownTimer >= objectCooldown)
             {
-                cooldownTimer += Time.deltaTime;
-                if (cooldownTimer >= objectCooldown)
-                {
-                    stateInfo.agent.enabled = true;
-                    stateInfo.rb.isKinematic = true;
-                    runCooldown = false;
-                }
+                reachedObject = false;
+                runCooldown = false;
+                cooldownTimer = 0;
             }
-            agent.SetDestination(destination);
-            return this;
-        }
-        else
-        {
-            return chaseState;
         }
     }
 
@@ -48,12 +38,36 @@ public class UseEnvironmentObjectState : State
     {
         if (collision.gameObject.tag.Equals("EnvironmentObject"))
         {
-            if (collision.gameObject.GetComponent<BouncePad>() != null)
-            {
-                BouncePlayer(stateInfo.gameObject);
-            }            
+            reachedObject = true;
+            runCooldown = true;
         }
-    }    
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Equals("EnvironmentObject"))
+        {
+            reachedObject = true;
+            runCooldown = true;
+        }
+    }
+
+    public override State RunCurrentState(NavMeshAgent agent)
+    {
+        destination = FindObject();
+        if (stateInfo.objectInRange && !reachedObject)
+        {
+            if (!reachedObject)
+            {
+                agent.SetDestination(destination);
+            }
+            return this;
+        }
+        else
+        {
+            return chaseState;
+        }
+    } 
 
     private Vector3 FindObject()
     {
@@ -74,17 +88,5 @@ public class UseEnvironmentObjectState : State
         }        
         Debug.Log(gameObject.name + ": Going to Object");
         return objectDest;
-    }
-
-    void BouncePlayer(GameObject bouncePad)
-    {
-        stateInfo.agent.enabled = false;
-        stateInfo.rb.isKinematic = false;
-        runCooldown = true;
-        cooldownTimer = 0;
-
-        Vector3 bounce = bouncePad.transform.up * bouncePad.GetComponent<BouncePad>().bounceAmount;
-
-        stateInfo.rb.AddForce(bounce, ForceMode.VelocityChange);
     }
 }

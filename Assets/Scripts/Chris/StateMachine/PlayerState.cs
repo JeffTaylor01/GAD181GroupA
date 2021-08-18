@@ -6,8 +6,6 @@ using UnityEngine.AI;
 public class PlayerState : State
 {
     private StateManager stateInfo;
-    public Color playerColor;
-    public Color taggerColor;
 
     private bool gotTargets;
     public GameObject[] targets;
@@ -25,16 +23,13 @@ public class PlayerState : State
 
         if (isIT)
         {
-            Debug.Log("Player is IT");
-            GetComponentInParent<MeshRenderer>().material.color = taggerColor;
-
             if (!gotTargets)
             {
                 targets = getTargets();
             }
 
             findClosest();
-            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 1.1) && stateInfo.canTag)
+            if ((Vector3.Distance(gameObject.transform.parent.position, target.transform.position) <= 2) && stateInfo.canTag)
             {
                 Debug.Log(gameObject.transform.parent.name + " tagged: " + target.name);
                 if (!target.GetComponent<StateManager>().shielded)
@@ -42,14 +37,8 @@ public class PlayerState : State
                     tagged();
                 }
             }
-
             distance = Vector3.Distance(gameObject.transform.parent.position, target.transform.position);
-        }
-        else if (checkMaterial())
-        {
-            GetComponentInParent<MeshRenderer>().material.color = playerColor;
-        }
-        
+        }        
         return this;
     }
 
@@ -154,17 +143,5 @@ public class PlayerState : State
         stateInfo.taggedAnother(target.GetComponent<StateManager>());
         target.GetComponent<StateManager>().gotTagged(stateInfo);
         stateInfo.contestants.tagger = target;
-    }
-
-    private bool checkMaterial()
-    {
-        if (GetComponentInParent<MeshRenderer>().material.color != playerColor)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 }

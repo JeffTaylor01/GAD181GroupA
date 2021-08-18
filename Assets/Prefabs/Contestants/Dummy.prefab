@@ -115,12 +115,21 @@ MonoBehaviour:
   contestants: {fileID: 0}
   isIT: 0
   isPlayer: 0
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
+  wanderColor: {r: 1, g: 1, b: 1, a: 1}
+  itColor: {r: 1, g: 0, b: 0, a: 1}
   currentState: {fileID: 3223919913511425496}
+  agent: {fileID: 0}
+  rb: {fileID: 0}
   canTag: 0
+  agentSpeed: 0
   ignoreIT: 0
   shielded: 0
   heldItem: {fileID: 0}
+  itemInRange: 0
   itemUsed: 0
+  objectInRange: 0
+  stunned: 0
 --- !u!195 &3223919913301518682
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -187,8 +196,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isIT: 0
-  dummyColor: {fileID: 2100000, guid: b85258663ef6b03459b2199d51b4bf10, type: 2}
-  taggerColor: {fileID: 2100000, guid: 02ebbbd988a3522458e2248fa670155e, type: 2}
   targets: []
   target: {fileID: 0}
   distance: 0

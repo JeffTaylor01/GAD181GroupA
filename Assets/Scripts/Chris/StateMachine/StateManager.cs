@@ -10,11 +10,15 @@ public class StateManager : MonoBehaviour
     public bool isIT;
     public bool isPlayer;
 
+    public Color playerColor;
+    public Color wanderColor;
+    public Color itColor;
+
     public State currentState;
     public NavMeshAgent agent;
     public Rigidbody rb;
 
-    private float taggedCooldown = 2;
+    private float taggedCooldown = 2.5f;
     private float cooldownTimer;
     private bool runTagCooldown;
     public bool canTag;
@@ -43,7 +47,20 @@ public class StateManager : MonoBehaviour
     }
     // Update is called once per frame
     private void Update()
-    {             
+    {
+        if (isIT)
+        {
+            currentState.isIT = true;
+            canTag = true;
+        }        
+        else
+        {
+            agent.speed = agentSpeed;
+            currentState.isIT = false;
+            canTag = false;
+        }
+
+        checkMaterial();
 
         if (runTagCooldown)
         {
@@ -64,23 +81,19 @@ public class StateManager : MonoBehaviour
                 {
                     ignoreIT = false;
                 }
-            }
-            
-            if (isIT)
-            {
-                currentState.isIT = true;
-                canTag = true;
-            }
-            else
-            {
-                agent.speed = agentSpeed;
-                currentState.isIT = false;
-                canTag = false;
-            }
+            }            
             FindItem();
             FindObject();
             RunStateMachine();
         }        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag.Equals("Surface") && agent.enabled != true && !isPlayer)
+        {
+            agent.enabled = true;
+        }
     }
 
     private void RunStateMachine()
@@ -155,5 +168,33 @@ public class StateManager : MonoBehaviour
             }            
             contestants.ResetTimer();
         }        
-    }    
+    }
+
+    private void checkMaterial()
+    {
+        if (isIT)
+        {
+            if (GetComponentInParent<MeshRenderer>().material.color != itColor)
+            {
+                GetComponentInParent<MeshRenderer>().material.color = itColor;
+            }
+        }
+        else
+        {
+            if (isPlayer)
+            {
+                if (GetComponentInParent<MeshRenderer>().material.color != playerColor)
+                {
+                    GetComponentInParent<MeshRenderer>().material.color = playerColor;
+                }
+            }
+            else
+            {
+                if (GetComponentInParent<MeshRenderer>().material.color != wanderColor)
+                {
+                    GetComponentInParent<MeshRenderer>().material.color = wanderColor;
+                }
+            }            
+        }
+    }
 }
