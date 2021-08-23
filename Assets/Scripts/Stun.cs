@@ -13,6 +13,7 @@ public class Stun : MonoBehaviour
     public bool thrown;
     public float timer;
     public GameObject projectile;
+    public GameObject projectileTrail;
     public GameObject user;
     private StateManager stateInfo;
     private bool userPC;
@@ -50,6 +51,7 @@ public class Stun : MonoBehaviour
         stateInfo = user.GetComponent<StateManager>();
         stateInfo.itemUsed = true;
         thrown = true;
+        StunPlayers();
 
         timer = 0;
     }
@@ -76,7 +78,7 @@ public class Stun : MonoBehaviour
                 else
                 {
                     var pc = collisions[i].GetComponent<NavMeshAgent>();
-                    pc.speed = 40;
+                    pc.Resume();
                 }
             }
         }
@@ -96,14 +98,11 @@ public class Stun : MonoBehaviour
         {
             Throw();
         }
-        else
-        {
-            projectile.GetComponent<MeshRenderer>().enabled = false;
-        }
+
         if (runStun)
         {
             timer += Time.deltaTime;
-            Debug.Log("Running Timer");
+            //Debug.Log("Running Timer");
             if (timer >= stunTime)
             {
                 RemoveStun();
@@ -172,6 +171,7 @@ public class Stun : MonoBehaviour
         targetPos.parent = null;
         projectile.gameObject.transform.parent = null;
         projectile.GetComponent<MeshRenderer>().enabled = true;
+        projectileTrail.SetActive(true);
 
         throwTime += Time.deltaTime;
         Vector3 pos = Vector3.Lerp(startPos, targetPos.position, throwTime);
@@ -188,10 +188,16 @@ public class Stun : MonoBehaviour
     }
 
     private void Arrived()
+    {        
+        StartCoroutine(Scale());
+        runStun = true;
+    }
+
+    private void StunPlayers()
     {
         Collider[] colliders = Physics.OverlapSphere(targetPos.position, stunRadius);
         collisions = colliders;
-        for (int i = 0; i <  collisions.Length; i++)
+        for (int i = 0; i < collisions.Length; i++)
         {
             if (collisions[i].gameObject.tag.Equals("Player"))
             {
@@ -211,10 +217,26 @@ public class Stun : MonoBehaviour
                 else
                 {
                     var pc = collisions[i].GetComponent<NavMeshAgent>();
-                    pc.speed = 0;
+                    pc.Stop();
                 }
             }
         }
-        runStun = true;
+    }
+
+    IEnumerator Scale()
+    {
+        float timer = 0;
+
+        while (true)
+        {
+            while (stunRadius * 2 > projectile.transform.localScale.x)
+            {
+                timer += Time.deltaTime;
+                projectile.transform.localScale += new Vector3(1, 1, 1) * Time.deltaTime * 5;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(.01f);
+        }
     }
 }

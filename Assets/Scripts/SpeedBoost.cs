@@ -13,9 +13,11 @@ public class SpeedBoost : MonoBehaviour
     private float playerSpeed;
     public GameObject user;
     private StateManager stateInfo;
+    public GameObject trail;
 
     public void UseItem()
     {
+        trail.SetActive(true);
         stateInfo = user.GetComponent<StateManager>();
         stateInfo.itemUsed = true;
 

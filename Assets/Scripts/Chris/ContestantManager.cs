@@ -97,12 +97,9 @@ public class ContestantManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player != null)
-        {
-            CeaseFire();
-            Winner();
-            Elimination();            
-        }
+        CeaseFire();
+        Winner();
+        Elimination();
     }
 
     private void CeaseFire()
@@ -131,42 +128,19 @@ public class ContestantManager : MonoBehaviour
     private void Elimination()
     {
         if (runElimination)
-        {
+        {            
             if (contestants.Count > 1)
             {
                 elimTimer += Time.deltaTime;
                 if (elimTimer >= eliminationTime)
                 {                    
-                    selectIT = true;
-                    if (contestants.Count == 1 && contestants.Contains(player))
-                    {
-                        hasWinner = true;
-                        bgm.Stop();
-                        winText.SetActive(true);
-                        win.Play();
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-                        Time.timeScale = 0;
-                    }
-                    else if (!contestants.Contains(player) && includePlayer)
-                    {
-                        hasWinner = true;
-                        loseScreen.SetActive(true);
-                        var pause = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenu>();
-                        pause.canPause = false;
-                        bgm.Stop();
-                        lose.Play();
-                        elimTimer = 20;                        
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-                        Time.timeScale = 0;
-                    }
+                    selectIT = true;                    
                     contestants.Remove(tagger);
                     Destroy(tagger);
                     SelectTagger();
                     elimTimer = 0;
                 }
-            }            
+            }
         }
     }
 
@@ -192,13 +166,34 @@ public class ContestantManager : MonoBehaviour
         }
         else if (contestants.Count == 1)
         {
+            if (player != null)
+            {
+                win.Play();
+                bgm.Stop();
+                winText.SetActive(true);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
+            }
+            else
+            {
+                lose.Play();
+                bgm.Stop();
+                loseScreen.SetActive(true);
+                var pause = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenu>();
+                pause.canPause = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
+            }
             hasWinner = true;
             winner = contestants[0];
             winner.GetComponent<StateManager>().isIT = false;
             tagger = null;
             runElimination = false;
-        }
+        }     
     }
+
     public void ResetTimer()
     {
         elimTimer = 0;

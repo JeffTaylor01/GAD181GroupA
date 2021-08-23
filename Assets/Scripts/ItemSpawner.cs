@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemSpawner : MonoBehaviour
 {
 
+    public GameObject[] holograms;
     public GameObject[] items;
     public GameObject item;
 
@@ -28,13 +29,9 @@ public class ItemSpawner : MonoBehaviour
     void Update()
     {
 
-        if (itemSpawned)
+        if (!itemSpawned && !runCooldown)
         {
-            mat.color = Color.white;
-        }
-        else
-        {
-            mat.color = Color.yellow;
+            spawnItem();
         }
 
         if (runCooldown)
@@ -64,7 +61,7 @@ public class ItemSpawner : MonoBehaviour
         {
             if (other.tag.Equals("Player"))
             {
-                Debug.Log("Player touched spawner");
+                //Debug.Log("Player touched spawner");
                 if (other.gameObject.GetComponent<StateManager>().heldItem == null)
                 {
                     runCooldown = true;
@@ -77,8 +74,9 @@ public class ItemSpawner : MonoBehaviour
 
     private void spawnItem()
     {
-        Debug.Log("New Item Spawned");
-        item = items[Random.Range(0, items.Length)];
+        int selected = Random.Range(0, items.Length);
+        item = items[selected];
+        holograms[selected].SetActive(true);
         itemSpawned = true;
     }
 
@@ -93,6 +91,10 @@ public class ItemSpawner : MonoBehaviour
             player.GetComponent<StateManager>().heldItem = it;
             itemSpawned = false;
             item = null;
+            foreach (GameObject icon in holograms)
+            {
+                icon.SetActive(false);
+            }
         }        
     }
 }
