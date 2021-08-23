@@ -47,6 +47,7 @@ public class BouncePad : MonoBehaviour
             var pc = player.gameObject.GetComponent<NavMeshAgent>();
             pc.enabled = false;
             var pa = player.gameObject.GetComponent<Rigidbody>();
+            pa.isKinematic = false;
             pa.velocity = bounce;
         }
     }

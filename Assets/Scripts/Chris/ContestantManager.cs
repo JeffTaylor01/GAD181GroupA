@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class ContestantManager : MonoBehaviour
 {
@@ -100,6 +101,11 @@ public class ContestantManager : MonoBehaviour
         CeaseFire();
         Winner();
         Elimination();
+
+        if (player == null && includePlayer)
+        {
+            SceneManager.LoadScene("LoseScreen");
+        }
     }
 
     private void CeaseFire()
@@ -168,24 +174,12 @@ public class ContestantManager : MonoBehaviour
         {
             if (player != null)
             {
-                win.Play();
-                bgm.Stop();
                 winText.SetActive(true);
+                player.gameObject.GetComponentInChildren<PlayerCameraControlelr>().rotSpeed = 0;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 Time.timeScale = 0;
-            }
-            else
-            {
-                lose.Play();
-                bgm.Stop();
-                loseScreen.SetActive(true);
-                var pause = GameObject.FindGameObjectWithTag("PauseMenu").GetComponent<PauseMenu>();
-                pause.canPause = false;
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-            }
+            }            
             hasWinner = true;
             winner = contestants[0];
             winner.GetComponent<StateManager>().isIT = false;

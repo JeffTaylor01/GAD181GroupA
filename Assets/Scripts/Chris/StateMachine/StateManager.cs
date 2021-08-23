@@ -93,6 +93,7 @@ public class StateManager : MonoBehaviour
         if (collision.gameObject.tag.Equals("Surface") && agent.enabled != true && !isPlayer)
         {
             agent.enabled = true;
+            rb.isKinematic = true;
         }
     }
 

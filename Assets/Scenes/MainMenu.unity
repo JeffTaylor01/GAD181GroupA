@@ -825,7 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1146b18c19054445a4598630d46b7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: PlayableDemo
+  level: ArenaLevel
 --- !u!114 &831721110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,7 +1122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1146b18c19054445a4598630d46b7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: Player_Testing
+  level: TutorialRoom
 --- !u!114 &1029724731
 MonoBehaviour:
   m_ObjectHideFlags: 0
